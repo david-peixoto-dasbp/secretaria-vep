@@ -2,6 +2,10 @@
 
 Skills do cartório da Vara de Execução Penal de Boa Vista/RR (Regime Fechado e Semiaberto), separadas do vep-brain.
 
+## Normas
+
+A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-vigente.pdf` (texto em `.txt`). Versões anteriores e o passo a passo da troca estão em `normas/`.
+
 ## Skills
 
 | Skill | Para que serve |
