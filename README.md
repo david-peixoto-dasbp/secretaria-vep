@@ -16,6 +16,7 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 | `skills/vep-conferir-alvara` | Confere em lote, sem alterar nada, se alvarás de soltura do SEEU foram cumpridos, cruzando cada processo com a certidão carcerária do Canaimé. |
 | `skills/vep-certidao-alvara-bnmp` | Dá baixa em alvarás pendentes no BNMP, emitindo a certidão de cumprimento após comprovar a saída no Canaimé. |
 | `skills/vep-grupos-digito` | Separa processos pelo 7º algarismo entre Roni (1 e 2), Diego (3 e 4), Silvio (0 e 5), Riba (6 e 8) e Andreia (7 e 9). |
+| `skills/vep-cadastro-remicao` | Cadastra no SEEU, pela tela nova de remição (manual CNJ de 27/10/2026), os incidentes de remição e de dias perdidos declarados nas decisões que voltaram da conclusão, com helpers em `scripts/`. |
 | `skills/vep-produtividade-gabinete` | Levanta no SEEU a produtividade do gabinete (minutas por assessor, mês, área e tipo) e entrega planilha .xlsx com conferência de totais e gráficos. |
 
 ## Como usar
