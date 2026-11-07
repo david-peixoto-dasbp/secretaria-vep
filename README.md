@@ -10,7 +10,15 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 
 | Skill | Para que serve |
 |---|---|
-| `skills/vep-retorno-conclusao` | Cumpre no SEEU as decisões que voltam em Retorno de Conclusão: progressão, livramento (concedido ou indeferido), extinção, remição, retificação, OS 001/2026 e lembretes. Versão 2.5 (30/10/2026), nome interno vep-progressao. |
+| `skills/vep-retorno-conclusao` | Orquestrador do Retorno de Conclusão (v3.0): lê a decisão, classifica cada determinação e indica a skill que a cumpre, na ordem de execução, sob plano, aprovação e prova. |
+| `skills/vep-progressao-regime` | Progressão de regime concedida ou indeferida: conferência da data-base, Alteração de Data-Base, incidente pendente e RSPE. |
+| `skills/vep-livramento` | Livramento condicional concedido (data-base, progressão concomitante, incidente, condições) ou indeferido. |
+| `skills/vep-extincao-pena` | Extinção da pena total, parcial ou com efeitos futuros: incidente, remessas e o que fica para trânsito e arquivamento. |
+| `skills/vep-retificacao-condenacao` | Retifica o desmembramento ativo (circunstâncias, reincidência, frações) e certifica as novas datas do RSPE. |
+| `skills/vep-falta-grave-incidente` | Portaria, art. 16, § 1º, I a III (antiga OS 001/2026): falta grave no período, incidente não concedido subjetivo, certidão e ciência. |
+| `skills/vep-lapso-vencido-concluso` | Lapso vencido: certidão de lapso e certidão do Canaimé numa juntada e conclusão com o agrupador de incidente vencido. |
+| `skills/vep-devolucao-magistrado` | Divergência entre a decisão e o SEEU: certidão dos fatos e devolução concluso ao magistrado, só com ordem do usuário. |
+| `skills/vep-comunicacoes-decisao` | Última etapa: atestado de pena, remessas ao MP, Defensoria e unidade, intimação de advogado, lembrete e aviso de BNMP. |
 | `skills/vep-triagem-expedientes` | Lê uma lista de processos no SEEU a partir da última decisão e agrupa por expediente a fazer, conforme a Portaria vigente, sem alterar nada. |
 | `skills/vep-conclusao-urgente` | Junta certidão do Canaimé e Relatório da Situação Processual Executória e envia concluso com urgência (Portaria, art. 14), sob plano, aprovação e prova. |
 | `skills/vep-conferir-alvara` | Confere em lote, sem alterar nada, se alvarás de soltura do SEEU foram cumpridos, cruzando cada processo com a certidão carcerária do Canaimé. |
@@ -21,4 +29,4 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 
 ## Como usar
 
-Copie a pasta da skill para `.claude/skills/` do Sistema VEP (ou suba o SKILL.md em Configurações > Skills no claude.ai). A vep-retorno-conclusao roda no SEEU pelo Chrome, no perfil Analista, sempre sob plano, aprovação e prova (Res. CNJ 615/2025).
+Copie a pasta da skill para `.claude/skills/` do Sistema VEP (ou suba o SKILL.md em Configurações > Skills no claude.ai). As skills de SEEU rodam no SEEU pelo Chrome, no perfil Analista, sempre sob plano, aprovação e prova (Res. CNJ 615/2025).

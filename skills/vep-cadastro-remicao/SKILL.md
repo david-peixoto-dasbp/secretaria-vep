@@ -62,6 +62,12 @@ Limites do SEEU (aprendidos em 07/11/2026):
 - Se o total da decisão não couber, lançar o que cabe, explicar na Observação e avisar o usuário. Nunca jogar a diferença em remição alheia à decisão.
 - A tela de dias perdidos não tem botão Remover: errou, avisar o usuário.
 
+## Fase 4: remições antigas e progressão na mesma decisão
+
+Chamada pelo orquestrador `vep-retorno-conclusao` e pela `vep-progressao-regime`.
+- Remição com Data de Referência posterior à nova data-base: Alterar, **Data Final = véspera da data-base**, referência Data de Fim, Salvar (clique real); conferir o Complemento salvo.
+- Decisão que remiu e progrediu: cadastrar a remição antes da progressão, com referência anterior à progressão (véspera da data-base), para o SEEU abater na conta do novo regime.
+
 ## Técnicas de tela (Claude in Chrome)
 
 - Carregar `scripts/helpers-seeu-remicao.js` no frame principal com `javascript_tool` (as funções ficam em `window.top`). Recarregar se a aba for trocada ou atualizada.

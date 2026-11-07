@@ -1,0 +1,19 @@
+---
+name: "vep-lapso-vencido-concluso"
+description: "Para benefício com lapso vencido no SEEU da VEP de Boa Vista/RR (livramento, progressão ou término): confere o incidente pendente, junta certidão de lapso e certidão carcerária do Canaimé numa juntada só e faz conclusão com o agrupador de incidente vencido, sob plano, aprovação e prova."
+---
+
+# Lapso vencido: certidão e concluso
+
+Desmembrada da vep-retorno-conclusao 2.5 (item I; validada no 1001596-19.2024 e no 0015728-50.2014). Não é retorno de conclusão. Regras comuns e técnicas: `vep-retorno-conclusao`. Base: Portaria, art. 16 (instaurar o incidente com data transcorrida ou nos 90 dias seguintes, com certidão carcerária e RSPE). Antes, conferir falta grave no período (`vep-falta-grave-incidente`).
+
+## Atos
+
+1. **Incidente**: aba Incidentes Pendentes. Já existe (ex.: LIVRAMENTO CONDICIONAL pendente): não criar outro; o alerta de ofício continua até a decisão. Não existe: seguir o modelo do cartório (movs. 192 do 1001596-19.2024 e 350 do 0015728-50.2014): juntada de INCIDENTE DE EXECUÇÃO PENAL pelo link da pendência, certidão "há lapso temporal para ... a vencer/vencido em ...", incidente pendente (Concedido Juiz = Pendente, vínculo com a pena ativa) e remessas às partes. Incluir no plano antes de executar.
+2. Ler as decisões posteriores ao incidente: alguma já decidiu o benefício? (decisão só de domiciliar ou de indulto deixa o livramento pendente).
+3. **Dados**: aba Informações Adicionais, "Cálculo dos Requisitos Temporais" (data-base, pena x fração, "Data do Requisito Temporal", "Em trâmite desde").
+4. **Certidão carcerária do Canaimé, sempre.** Login e reCAPTCHA (canaime.com.br/sgp2rr) são do usuário; fechar o anúncio ("Fechar"). Pesquisa de Reeducando por nome, conferir RJI e mãe com a capa, abrir a ficha, Impressão, "Certidão Carc.". Gerar o PDF: na aba da certidão, embutir em JS as imagens (dataURL), o CSS e os iframes do cabeçalho (srcdoc), baixar o HTML por blob para Downloads, trazer com `device_stage_files`, renderizar no Chromium do contêiner (playwright, JS desligado, A4, `print_background`), devolver com `device_commit_files` e copiar para `/home/claude`.
+5. **Uma juntada só, uma assinatura**: Juntar Documento como página principal (`window.top.location.href` = URL do frame). Tipo Movimento CERTIDÃO. (a) PDF do Canaimé por `file_upload`, Descrição "Atestado de permanência e conduta carcerária". (b) Certidão de lapso: Tipo do Arquivo "Certidão", Meus Modelos, modelo do usuário "CERTIDÃO REQUISITO TEMPORAL", Digitar Texto, trocar só o parágrafo "CERTIFICO..." pelo DOM do CKEditor, Continuar, Salvar. (c) Certidão de lapso em primeiro (Mover Acima). (d) Desmarcar "gerar pendência no menu Análise de Juntadas" (volta marcado depois do Salvar: reconferir). O usuário assina; não fechar a aba antes.
+   Texto: "CERTIFICO que, conforme o cálculo dos requisitos temporais do SEEU, o reeducando atingiu o lapso temporal para a concessão do livramento condicional em **DD/MM/AAAA** (data-base: DD/MM/AAAA; pena: XaYmZd x fração, resultando XaYmZd), encontrando-se pendente de apreciação o incidente de livramento condicional nº N. CERTIFICO, ainda, que segue anexa a certidão carcerária atualizada do reeducando, extraída do sistema Canaimé em DD/MM/AAAA."
+6. **Enviar Concluso**: abrir a movimentação da juntada, "Movimentar a Partir Desta Movimentação", Enviar Concluso (*): Tipo DECISÃO; magistrado da vara; Urgente = Não; Agrupador "0. INCIDENTE VENCIDO (progressão, livramento ou término com data vencida)"; sem assessor; Enviar imediatamente. Prova: "CONCLUSOS PARA DECISÃO" e "Pré-Analisar Conclusão: DECISÃO (Ref. JUNTADA DE CERTIDÃO ...)".
+7. No encerramento, apontar o que fica aberto: vista ao MP sem leitura, "Erro ao publicar ... Reenviar", Agendar Audiência, análise de juntada pendente.
