@@ -17,7 +17,7 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 | `skills/vep-retificacao-condenacao` | Retifica o desmembramento ativo (circunstâncias, reincidência, frações) e certifica as novas datas do RSPE. |
 | `skills/vep-falta-grave-incidente` | Portaria, art. 16, § 1º, I a III (antiga OS 001/2026): falta grave no período, incidente não concedido subjetivo, certidão e ciência. |
 | `skills/vep-lapso-vencido-concluso` | Lapso vencido: certidão de lapso e certidão do Canaimé numa juntada e conclusão com o agrupador de incidente vencido. |
-| `skills/vep-devolucao-magistrado` | Divergência entre a decisão e o SEEU: certidão dos fatos e devolução concluso ao magistrado, só com ordem do usuário. |
+| `skills/vep-devolucao-magistrado` | Erro material ou divergência entre a decisão e o SEEU: certidão dos fatos, concluso urgente no agrupador da matéria e finalização da conclusão retornada, sem cadastrar nada. |
 | `skills/vep-comunicacoes-decisao` | Última etapa: atestado de pena, remessas ao MP, Defensoria e unidade, intimação de advogado, lembrete e aviso de BNMP. |
 | `skills/vep-triagem-expedientes` | Lê uma lista de processos no SEEU a partir da última decisão e agrupa por expediente a fazer, conforme a Portaria vigente, sem alterar nada. |
 | `skills/vep-conclusao-urgente` | Junta certidão do Canaimé e Relatório da Situação Processual Executória e envia concluso com urgência (Portaria, art. 14), sob plano, aprovação e prova. |

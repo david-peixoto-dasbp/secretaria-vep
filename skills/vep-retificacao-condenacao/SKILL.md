@@ -21,5 +21,5 @@ Base: decisão judicial no caso concreto. Retificação por acórdão só com re
 
 1. Capa, Juntar Documento: Tipo Movimento JUNTADA DE **CERTIDÃO**; desmarcar "gerar pendência no menu Análise de Juntadas"; Tipo do Arquivo pela lupa = Certidão; Digitar Texto (CKEditor: `CKEDITOR.instances[...].setData(html)`); Continuar; Salvar.
 2. Texto: o que foi retificado e as novas datas do RSPE. Sem travessão.
-3. O usuário assina. A certidão sai com sigilo "Segredo" mesmo em processo público: está correto, não alterar.
+3. Assinatura pela regra comum da `vep-retorno-conclusao` (regra 3). A certidão sai com sigilo "Segredo" mesmo em processo público: está correto, não alterar.
 4. Depois: ciência às partes pela `vep-comunicacoes-decisao`.

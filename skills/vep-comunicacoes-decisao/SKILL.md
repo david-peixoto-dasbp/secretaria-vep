@@ -23,7 +23,7 @@ Prazos: salvo prazo da lei ou da decisão, **5 dias, em dobro para a Defensoria*
 
 ## Atestado de pena
 
-Aba Informações Adicionais, "Anexar Atestado de Pena à Movimentação", botão "Atestado de Pena" **de dentro do diálogo** (o homônimo da capa só emite o relatório em aba nova). Conferir o PDF (regime, remidos, data-base, previsões). O usuário assina, uma assinatura por vez. Prova: "JUNTADA DE RELATÓRIO DE ATESTADO DE PENA". Indeferimento sem mudança de cálculo: sem atestado, salvo pedido ou ordem. Entrega anual e no início/reinício: Portaria, art. 5º.
+Aba Informações Adicionais, "Anexar Atestado de Pena à Movimentação", botão "Atestado de Pena" **de dentro do diálogo** (o homônimo da capa só emite o relatório em aba nova). Conferir o PDF (regime, remidos, data-base, previsões). Assinatura pela regra comum da `vep-retorno-conclusao` (regra 3), uma por vez. Prova: "JUNTADA DE RELATÓRIO DE ATESTADO DE PENA". Indeferimento sem mudança de cálculo: sem atestado, salvo pedido ou ordem. Entrega anual e no início/reinício: Portaria, art. 5º.
 
 ## Remessas com Retorno de Conclusão
 

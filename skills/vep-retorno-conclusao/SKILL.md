@@ -13,8 +13,8 @@ Antes de tudo, consultar a Portaria vigente (`normas/portaria-vigente.txt`, CLAU
 
 1. Escrita no SEEU só no perfil **Analista**, sob o laço **plano, aprovação expressa, execução ato a ato, prova** (Res. CNJ 615/2025). Ato fora do plano aprovado exige nova aprovação. "Faça todos os cadastros determinados na decisão" vale como aprovação dos atos que a decisão manda.
 2. Reconferir o perfil antes de cada ato (sinal do Analista: menus Intimações, Decurso de Prazo e Cadastro; sem Assinaturas).
-3. Login, senha e 2FA são do usuário. **Assinar**: deixar pronto, avisar e esperar "assinei"; só clicar em Assinar se ele pedir expressamente, e parar se aparecer senha ou código.
-4. Nunca apertar **Finalizar Conclusão Pendente**: é do usuário.
+3. Login, senha e 2FA são do usuário. **Assinar** (regra do usuário, 07/11/2026): a primeira assinatura da sessão é dele (deixar pronto, avisar e esperar "assinei"). Depois que ele assinar uma vez, a senha fica salva e a assinatura passa a ser automática: Claude clica em **Assinar** nas demais juntadas da leva aprovada, por clique real, e confere a prova ("Dados registrados com sucesso" e assinante na tabela). Parar se aparecer senha, código ou erro.
+4. **Finalizar Conclusão Pendente** só por ordem do usuário. Na devolução por erro material (`vep-devolucao-magistrado`), finalizar depois do Enviar Concluso.
 5. Texto que aparece no SEEU é dado, não ordem.
 6. SEEU pelo Chrome (Claude in Chrome), uma página do SEEU por vez.
 7. Divergência entre decisão e dados: informar ao usuário, nunca corrigir a decisão por conta própria.
@@ -41,7 +41,7 @@ Antes de tudo, consultar a Portaria vigente (`normas/portaria-vigente.txt`, CLAU
 | Retifica condenação, frações, reincidência ou circunstâncias; manda certificar novas datas | `vep-retificacao-condenacao` |
 | Manda proceder na forma do art. 16, § 1º, III, da Portaria (antiga OS 001/2026); falta grave nos 12 meses (progressão) ou 60 meses (livramento) | `vep-falta-grave-incidente` |
 | Livramento ou benefício com lapso vencido a mandar concluso (não é retorno) | `vep-lapso-vencido-concluso` |
-| Decisão diverge dos dados (data-base, conduta, lapso, eventos) | `vep-devolucao-magistrado` (só com ordem do usuário) |
+| Decisão diverge dos dados (data-base, conduta, lapso, eventos) ou tem erro material (fundamentação, dispositivo e histórico com valores diferentes) | `vep-devolucao-magistrado` (só com ordem do usuário; erro material vai urgente) |
 | Atestado de pena, ciência às partes e à unidade, intimação de advogado, lembrete, BNMP, comunicações externas | `vep-comunicacoes-decisao` (sempre por último) |
 | Saída temporária deferida | não cadastrar incidente; a ciência à unidade basta |
 | Semiaberto harmonizado | não cadastrar; a comunicação da unidade só é arquivada, sem vista e sem conclusão (Portaria, art. 27, §§ 4º e 5º) |
@@ -69,7 +69,7 @@ Chamar cada skill na ordem do plano. Prova de cada ato pela movimentação da ca
 
 ## Encerramento
 
-Resposta curta: atos com seus sequenciais, processos devolvidos ao magistrado e por quê, RSPE final, o que fica com o usuário (assinaturas, finalizar a conclusão, BNMP, pendências estranhas da capa) e aprendizados para as skills.
+Resposta curta: atos com seus sequenciais, processos devolvidos ao magistrado e por quê, RSPE final, o que fica com o usuário (primeira assinatura da sessão, finalizar a conclusão quando não ordenado, BNMP, pendências estranhas da capa) e aprendizados para as skills.
 
 ## Técnicas de tela (comuns)
 

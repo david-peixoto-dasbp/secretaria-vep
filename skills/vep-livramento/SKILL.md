@@ -17,7 +17,7 @@ Desmembrada da vep-retorno-conclusao 2.5 (itens C e K, orientações CGJ/SEEU n�
    - "comunicar mensalmente ao juízo a ocupação" = **Comparecimento em juízo**, Local = Juízo, periodicidade 30;
    - "não mudar do território da comarca" = **Proibição de ausentar-se**, Tipo = Comarca, periodicidade em branco.
    Cada uma com observação citando a decisão. "Erro geral": reabrir as condições pelo incidente (Incidentes Concedidos, número, link "Condições de cumprimento do Livramento Condicional"); não usar Voltar.
-5. Conferir o RSPE e o atestado (regime, término). Comunicações pela `vep-comunicacoes-decisao`: unidade DECISÃO DE BENEFÍCIO PARA CUMPRIMENTO; MP ciência; advogado já intimado na assinatura. Atestado por último; o usuário assina.
+5. Conferir o RSPE e o atestado (regime, término). Comunicações pela `vep-comunicacoes-decisao`: unidade DECISÃO DE BENEFÍCIO PARA CUMPRIMENTO; MP ciência; advogado já intimado na assinatura. Atestado por último; assinatura pela regra comum da `vep-retorno-conclusao` (regra 3).
 6. Ficam com o usuário: carta de livramento, cerimônia (Portaria, art. 17, § 1º), comunicações, BNMP (art. 29), Finalizar Conclusão. Recusa do liberando: certificar e fazer conclusão (art. 17, § 3º).
 
 ## Indeferido
