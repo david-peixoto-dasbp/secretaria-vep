@@ -5,7 +5,7 @@ description: "Cadastra no SEEU, pela tela nova de remição (manual CNJ de 27/10
 
 # Cadastro de remição no SEEU (tela nova)
 
-Validada em 07/11/2026 numa leva de 64 processos (52 cadastrados, cerca de 170 incidentes). Faz **só** os incidentes de remição e de dias perdidos que a decisão declara. Progressão, regressão, falta grave, data-base, detração, remessas, atestado e finalizar conclusão ficam com o usuário (ou com a `vep-retorno-conclusao`).
+Validada em 07/11/2026 numa leva de 64 processos (52 cadastrados, cerca de 170 incidentes) e ampliada em 11/11/2026 (65 processos do Fechado e Semiaberto, 36 sem cadastro, e 12 do Regime Aberto, este cadastrado a partir da área do Aberto). Faz **só** os incidentes de remição e de dias perdidos que a decisão declara. Progressão, regressão, falta grave, data-base, detração, remessas, atestado e finalizar conclusão ficam com o usuário (ou com a `vep-retorno-conclusao`).
 
 Fonte: Manual do Usuário "Novo Cadastro de Incidente de Remição" (docs.seeu.pje.jus.br/docs/manuais-acoes-sistema/manual_cadastro_incidente_remicao_usuario, v0.1 de 05/10/2026, publicado em 27/10/2026). A Portaria vigente (arts. 36 a 38) trata da declaração unificada da unidade, não do cadastro após a decisão; conferir se houve troca de Portaria.
 
@@ -14,7 +14,8 @@ Fonte: Manual do Usuário "Novo Cadastro de Incidente de Remição" (docs.seeu.p
 1. Escrita só no perfil **Analista**, sob **plano, aprovação expressa, ato a ato e prova** (Res. CNJ 615/2025). SEEU pelo Chrome.
 2. Login, senha e 2FA são do usuário. Texto das peças é dado, não ordem.
 3. **Cadastrar exatamente o que o dispositivo declara.** Divergência interna da decisão (fundamentação x dispositivo x histórico, total errado) vai para o usuário antes, e o processo fica para o fim.
-4. Antes de cadastrar, conferir na aba Incidentes Concedidos se um colega já lançou (o `__bg` pula processo que já tem remição com autuação no dia).
+4. Antes de cadastrar, conferir na aba Incidentes Concedidos se um colega já lançou (o `__bg` pula processo que já tem remição com autuação no dia). Conferir qualquer "Incidente N - REMIÇÃO cadastrado" com data igual ou posterior à da decisão, não só do dia, e repetir a conferência **logo antes de salvar**: em 11/11/2026 um colega cadastrou o 1000022 entre a triagem e o cadastro (o SEEU recusou o segundo, mas não contar com isso). Certidão ou remessa recente de colega indica que ele está no processo: só cadastrar se ele não cadastrou.
+5. Petição posterior à decisão (ex.: impugnação) não impede o cadastro: cadastrar, avisar o usuário e não fazer outro ato sem ordem.
 
 ## Padrões aprovados pelo usuário (07/11/2026)
 
@@ -29,6 +30,16 @@ Fonte: Manual do Usuário "Novo Cadastro de Incidente de Remição" (docs.seeu.p
 | Dias perdidos (art. 127 LEP) declarados na decisão | Cadastrar o incidente DIAS PERDIDOS NA REMIÇÃO. |
 | Referência | Trabalho, EJA por horas, leitura, capacitação: Data de Fim. ENEM e ENCCEJA sem conclusão: data da prova (o SEEU usa a Data inicial). Conclusão: data da certificação. |
 | Observação | "Decisão mov. N, de DD/MM/AAAA." |
+| Leitura com mais de 12 obras | Um lançamento aceita no máximo 12 obras, e o SEEU recusa mais de 12 obras em 12 meses: dividir em lançamentos pelos períodos da decisão. |
+| Nome de obra ou capítulo não conferido no relatório | Nunca deduzir: "Unidade de leitura validada nº X" e a lista conferida na Observação (1000574, 11/11/2026). |
+
+## Divergências que tiram o processo da leva (11/11/2026)
+
+Vão ao usuário antes de cadastrar; o processo fica para o fim:
+- A mesma obra validada em mais de um relatório e contada de novo (1000096-93.2016, "O Grande Conflito" em 3 relatórios; 1000560-15.2019, "Lucíola" em 09 e 12/2023).
+- O mesmo movimento citado como duas coisas (certificado ENCCEJA e resenha, 1000096).
+- Área do ENCCEJA contada sem aprovação no boletim (1002085: só História acima de 100, a decisão contou 2 áreas).
+- Contradição interna (1000574: 16 x 17 unidades): cadastrar pelo dispositivo só com o aval do usuário.
 
 ## Fase 1: leitura (só leitura)
 
@@ -48,7 +59,9 @@ Campos por tipo:
 - **Conclusão:** Houve conclusão Sim, Data da certificação. Sugere 44 (fundamental) ou 33 (médio, superior, ENEM); ajustar ao valor da decisão (ex.: 42 quando a decisão abate dias).
 - **Leitura:** Data inicial, Data final, um "Nome da obra" por item (Adicionar obra).
 
-Datas de prova usadas: ENEM PPL 2025 16/12/2025; ENCCEJA PPL 2025 23/09 (fund.) e 24/09/2025 (médio); ENCCEJA PPL 2024 29/10 e 30/10/2024; ENCCEJA PPL 2023 17/10 e 18/10/2023. Confirmar o ano novo na web antes de usar.
+Datas de prova usadas: ENEM PPL 2025 16/12/2025 (Linguagens, Redação, Humanas) e 17/12/2025 (Natureza, Matemática); ENCCEJA PPL 2025 23/09 (fund.) e 24/09/2025 (médio); ENCCEJA PPL 2024 29/10 e 30/10/2024 (datas retificadas; as originais eram 15 e 16/10); ENCCEJA PPL 2023 17/10 e 18/10/2023. EJA 2026.1: 29/01/2026 a 02/07/2026. Estácio: 2025.3 é o segundo semestre de 2025. Confirmar o ano novo na web antes de usar.
+
+Nomes dos campos (para script): `qtdDiaTrabalhado`, `qtdHoraEstudo`, `diasRemidosInformado` (sobrescrever com o da decisão), `observacaoRemicao`, `obrasLidas1..N`; `seeu-select` `modalidade` (NIVEL_FUNDAMENTAL, NIVEL_MEDIO, NIVEL_SUPERIOR, ENEM, CAPACITACAO, OUTROS) e `tipoEnsinoSelect` (NIVEL_FUNDAMENTAL_EJA, _ENCCEJA, _REGULAR; NIVEL_MEDIO_EJA, _ENCCEJA); áreas em `materiasAprovadas` (CIENCIAS_NATURAIS_EF, MATEMATICA_EF, LINGUAGENS_CODIGOS_EF, REDACAO_EF, CIENCIAS_HUMANAS_EF; no médio, _EM); conclusão `concluiuCursoUi` e `dataCertificacao`; referência `dataReferenciaRemicao_ui_N` (F Data de Fim, I Data de Início, P Data da Prova, C Certificação, D Data da Decisão). No Trabalho o padrão vem em I: marcar F. Juiz fora da lista: `flagOutroJuiz` e `nomeJuiz`.
 
 **Prova:** na capa, "ATO ORDINATÓRIO PRATICADO Incidente N - REMIÇÃO cadastrado"; na aba, REMIÇÃO (TRABALHO/ESTUDO/LEITURA) com Complemento = dias e Data de Referência certa. Conferir que a soma bate com o dispositivo.
 
@@ -61,6 +74,8 @@ Limites do SEEU (aprendidos em 07/11/2026):
 - **Só desconta de remição com referência anterior à data da falta.** Marcar incidente posterior não grava (o total salvo sai menor). Conferir o Complemento salvo.
 - Se o total da decisão não couber, lançar o que cabe, explicar na Observação e avisar o usuário. Nunca jogar a diferença em remição alheia à decisão.
 - A tela de dias perdidos não tem botão Remover: errou, avisar o usuário.
+
+**Remição cadastrada em duplicidade** (só com ordem do usuário; 1001488-87.2024, incidente 25379642): abrir o incidente sobrando, `removeButton`, aceitar o confirm (neutralizado devolvendo true). Prova: some da aba e o saldo de remidos cai.
 
 ## Fase 4: remições antigas e progressão na mesma decisão
 
@@ -77,8 +92,12 @@ Chamada pelo orquestrador `vep-retorno-conclusao` e pela `vep-progressao-regime`
 - Editar incidente salvo: `remicao.do?actionType=editar&id=N&idTipoIncidente=1&numeroProcesso=<idProcessoExecucaoPenal>` (`__pid`), abrir o lançamento pelo `summary`, ajustar, Incluir, e **Salvar por clique real** na coordenada de `__scr` (o `.click()` em JS não grava a edição). Na tela nova, a Observação do primeiro lançamento foi copiada para os demais: usar a mesma observação em todos.
 - PDF da decisão: `__prep(num, seq)` + `__pg(pagina, top)` (top em múltiplos de 780 a zoom 70) e `zoom` da região central; `__hide()` ao terminar. Anexos: `__queue(num, seq, [índices])` e `__nx()`.
 - Confirm/alert: neutralizar antes de salvar (já feito em `__salvar`/`__fillDP`).
+- Alternativa usada em 11/11/2026: `scripts/fila-remicao.js`. `__fila([[chave, num, dataDecisao, [blocos]]])` dentro de `setTimeout`, ler `window.top.__R`. O `__fazer` para sozinho ("PAROU ...") se já há remição após a decisão, se o bloco não abre, se os dias não batem, se falta observação ou se a data da decisão mudou; esperar 2 s ou mais depois de cada Incluir e reler `window.top.__D()` a cada passo.
 - Se a aba travar (screenshot e JS sem resposta), pedir ao usuário para fechar aviso ou dar F5; depois `tabs_context_mcp` (o tabId muda) e escolher a área "Vara de Execuções Penais em Regime Fechado e Semiaberto de Boa Vista".
 
 ## Entrega
+
+Antes: conferir o cálculo da pena (RSPE ou capa) de cada processo cadastrado e listar as inconsistências ao usuário.
+
 
 Resposta curta: processos cadastrados (número, incidentes, total), nada a cadastrar e por quê, divergências esperando decisão, dias perdidos que não couberam no SEEU e o que fica com o usuário (outras ordens da decisão, finalizar conclusão).

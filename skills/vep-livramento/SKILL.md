@@ -16,7 +16,7 @@ Desmembrada da vep-retorno-conclusao 2.5 (itens C e K, orientações CGJ/SEEU n�
    - "obter ocupação lícita" = **Obter ocupação lícita, dentro de prazo razoável se for apto para o trabalho** (periodicidade em branco);
    - "comunicar mensalmente ao juízo a ocupação" = **Comparecimento em juízo**, Local = Juízo, periodicidade 30;
    - "não mudar do território da comarca" = **Proibição de ausentar-se**, Tipo = Comarca, periodicidade em branco.
-   Cada uma com observação citando a decisão. "Erro geral": reabrir as condições pelo incidente (Incidentes Concedidos, número, link "Condições de cumprimento do Livramento Condicional"); não usar Voltar.
+   Cada uma com observação citando a decisão. Campos: `codTipoMedida`, `dataInicio` e período; comparecimento com `codTipoDestinatario` Juízo, periodicidade 30 e `flagConsiderarSabadoDomingo` falso; proibição com `tipoProibicaoAusencia` Comarca; gravar cada uma em `btnConfirmar`. Validado de novo no 1001488-87.2024 (11/11/2026, Regime Aberto). "Erro geral": reabrir as condições pelo incidente (Incidentes Concedidos, número, link "Condições de cumprimento do Livramento Condicional"); não usar Voltar.
 5. Conferir o RSPE e o atestado (regime, término). Comunicações pela `vep-comunicacoes-decisao`: unidade DECISÃO DE BENEFÍCIO PARA CUMPRIMENTO; MP ciência; advogado já intimado na assinatura. Atestado por último; assinatura pela regra comum da `vep-retorno-conclusao` (regra 3).
 6. Ficam com o usuário: carta de livramento, cerimônia (Portaria, art. 17, § 1º), comunicações, BNMP (art. 29), Finalizar Conclusão. Recusa do liberando: certificar e fazer conclusão (art. 17, § 3º).
 
@@ -24,7 +24,7 @@ Desmembrada da vep-retorno-conclusao 2.5 (itens C e K, orientações CGJ/SEEU n�
 
 1. Abrir o LIVRAMENTO CONDICIONAL pendente (Incidentes Pendentes). Concedido Juiz = **Não**; Motivo = Indeferimento Objetivo ou Subjetivo; Data de Decisão (subjetivo: dia 1º do mês da decisão, Portaria, art. 20, parágrafo único); Juiz; Observação curta. Salvar.
 2. Abre "Condições de cumprimento do Livramento Condicional": **não cadastrar nada e não clicar em Voltar** (aviso nativo trava a aba); sair reabrindo a capa pelo `location.href` do frame.
-3. Prova: incidente em Não-Concedidos; alerta de ofício some.
+3. Prova: incidente em Não-Concedidos; alerta de ofício some. Validado de novo no 0002076-29.2015 (11/11/2026): `concedidoJuiz` N, `motivoIndeferimento` Subjetivo, guias marcadas.
 4. Efeito colateral conhecido: a capa passa a mostrar "Medidas Diversas da Prisão: Há 1 Tipo(s) de Medida(s) sem medida alternativa ou monitoração eletrônica cadastrada(s)". Não mexer; avisar no encerramento.
 5. Sem mudança de cálculo: sem atestado; remessa à unidade e ciência das partes.
 

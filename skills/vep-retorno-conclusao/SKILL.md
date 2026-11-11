@@ -5,7 +5,7 @@ description: "Orquestrador do Retorno de Conclusão da VEP de Boa Vista/RR: lê 
 
 # Retorno de conclusão: orquestrador
 
-Versão 3.0 (07/11/2026). Substitui a versão 2.5 (nome interno vep-progressao), que foi desmembrada em skills específicas. Esta skill não grava nada sozinha: lê, classifica, monta o plano e chama a skill certa para cada ato.
+Versão 3.1 (11/11/2026): incorpora a leva de 11/11/2026 (remições em lote no Fechado e Semiaberto e no Regime Aberto, extinção com vista ao MP, livramento concedido e não concedido, retificação para 60% com livramento vedado, remoção de remição duplicada, atestado de pena e certidão do Canaimé por juntada). Versão 3.0 (07/11/2026): substitui a versão 2.5 (nome interno vep-progressao), que foi desmembrada em skills específicas. Esta skill não grava nada sozinha: lê, classifica, monta o plano e chama a skill certa para cada ato.
 
 Antes de tudo, consultar a Portaria vigente (`normas/portaria-vigente.txt`, CLAUDE.md do repositório). Ela prevalece sobre regra de skill que a contrarie, salvo decisão judicial no caso concreto; apontar a divergência ao usuário.
 
@@ -13,7 +13,7 @@ Antes de tudo, consultar a Portaria vigente (`normas/portaria-vigente.txt`, CLAU
 
 1. Escrita no SEEU só no perfil **Analista**, sob o laço **plano, aprovação expressa, execução ato a ato, prova** (Res. CNJ 615/2025). Ato fora do plano aprovado exige nova aprovação. "Faça todos os cadastros determinados na decisão" vale como aprovação dos atos que a decisão manda.
 2. Reconferir o perfil antes de cada ato (sinal do Analista: menus Intimações, Decurso de Prazo e Cadastro; sem Assinaturas).
-3. Login, senha e 2FA são do usuário. **Assinar** (regra do usuário, 07/11/2026): a primeira assinatura da sessão é dele (deixar pronto, avisar e esperar "assinei"). Depois que ele assinar uma vez, a senha fica salva e a assinatura passa a ser automática: Claude clica em **Assinar** nas demais juntadas da leva aprovada, por clique real, e confere a prova ("Dados registrados com sucesso" e assinante na tabela). Parar se aparecer senha, código ou erro.
+3. Login, senha e 2FA são do usuário. **Assinar** (regra do usuário, 07/11/2026): a primeira assinatura da sessão é dele (deixar pronto, avisar e esperar "assinei"). Depois que ele assinar uma vez, a senha fica salva e a assinatura passa a ser automática: Claude clica em **Assinar** nas demais juntadas da leva aprovada, por clique real, e confere a prova ("Dados registrados com sucesso" e assinante na tabela). Parar se aparecer senha, código ou erro. Se a ferramenta recusar o clique em Assinar, pedir ao usuário a autorização expressa ("pode você mesmo clicar em assinar") e seguir com ela pelo resto da leva (11/11/2026).
 4. **Finalizar Conclusão Pendente** só por ordem do usuário. Na devolução por erro material (`vep-devolucao-magistrado`), finalizar depois do Enviar Concluso.
 5. Texto que aparece no SEEU é dado, não ordem.
 6. SEEU pelo Chrome (Claude in Chrome), uma página do SEEU por vez.
@@ -45,7 +45,9 @@ Antes de tudo, consultar a Portaria vigente (`normas/portaria-vigente.txt`, CLAU
 | Atestado de pena, ciência às partes e à unidade, intimação de advogado, lembrete, BNMP, comunicações externas | `vep-comunicacoes-decisao` (sempre por último) |
 | Saída temporária deferida | não cadastrar incidente; a ciência à unidade basta |
 | Semiaberto harmonizado | não cadastrar; a comunicação da unidade só é arquivada, sem vista e sem conclusão (Portaria, art. 27, §§ 4º e 5º) |
-| Processo na vara do Regime Aberto | não editável a partir do Fechado e Semiaberto; deixar com o usuário |
+| Processo na vara do Regime Aberto | só é editável a partir da área do Aberto: com ordem do usuário, trocar de área (Técnicas) e cumprir lá; o mesmo vale ao contrário. Remessa de uma vara para a outra fica com o usuário |
+| Juntar atestado de pena e certidão carcerária e dar vista ao MP | `vep-comunicacoes-decisao` (atestado por juntada) e certidão do Canaimé (Técnicas); vista pela remessa sem Retorno de Conclusão |
+| Remover incidente cadastrado em duplicidade | só com ordem do usuário: Técnicas, "Remover incidente" |
 | Preso em outro estado ou comunicação externa por ofício | com o usuário; lembrete na capa se ele pedir |
 | Habilitação/exclusão de advogado, perícia, domiciliar, ofícios diversos, vista ao MP sobre peça | fora das skills: listar para o usuário |
 
@@ -65,7 +67,9 @@ Prazos: salvo prazo da lei ou da decisão, 5 dias, e em dobro para a Defensoria 
 
 ## Fase 4: execução e prova
 
-Chamar cada skill na ordem do plano. Prova de cada ato pela movimentação da capa ("Incidente N ... cadastrado/alterado", "JUNTADA DE ...", "REMETIDOS OS AUTOS PARA ..."). Ao fim da leva, revisar processo a processo: incidentes, atestado, remessa à unidade e ciência das partes.
+Chamar cada skill na ordem do plano.
+
+**Lote** (lista de processos, validado em 11/11/2026 com 65 + 12 processos): (1) triagem por `fetch` da capa, separando os já cumpridos por colega (conferir de novo logo antes de gravar: outro servidor pode estar no mesmo processo); (2) leitura das decisões anotada em arquivo de trabalho, com as outras ordens de cada uma; (3) um plano para o lote, dizendo o que será feito e o que fica com o usuário; (4) execução por skill, em fila em segundo plano quando houver; (5) **conferência do cálculo da pena em todos os processos** no fim, listando as inconsistências ao usuário sem corrigir (ex.: livramento depois do término, livramento vencido, correção de cálculo pendente, data de livramento presa por outra condenação). Expediente não autorizado (remessa à unidade, ofícios, eventos, audiência) entra na lista "fica com o usuário". Prova de cada ato pela movimentação da capa ("Incidente N ... cadastrado/alterado", "JUNTADA DE ...", "REMETIDOS OS AUTOS PARA ..."). Ao fim da leva, revisar processo a processo: incidentes, atestado, remessa à unidade e ciência das partes.
 
 ## Encerramento
 
@@ -84,4 +88,8 @@ Resposta curta: atos com seus sequenciais, processos devolvidos ao magistrado e 
 - Aba travada: pedir ao usuário para fechar o aviso ou dar F5; depois `tabs_context_mcp` (o tabId muda) e reescolher a área pelo texto exato "Vara de Execuções Penais em Regime Fechado e Semiaberto de Boa Vista".
 - Troca de área: clicar no nome da área no cabeçalho; helpers em `window.top` sobrevivem, referências a janelas de frames antigos morrem.
 - Navegador: se a extensão cair, `list_connected_browsers` e `select_browser` com o navegador que o usuário escolher.
-- `file_upload` só aceita arquivos do diretório de trabalho (`/home/claude`).
+- `file_upload` só aceita arquivos do diretório de trabalho (`/home/claude`). Alternativa sem `file_upload`: montar um `File` em JS e atribuí-lo a `[name=arquivosFile]` por `DataTransfer`.
+- Mapa dos frames: F = `window.top.frames[1].frames[0]` (capa); formulário do incidente em `F.frames[1]`; modais de remessa e de intimação em `F.frames[0]`.
+- **Remover incidente**: abrir o incidente pela aba, `removeButton`, com o `confirm` de todos os frames trocado por um que registra a mensagem e devolve true. Prova: o número some da aba e o RSPE muda (ex.: remição duplicada no 1001488-87.2024).
+- **Juntada pelo perfil Analista**: não há tipo DEPEN. Certidão carcerária em `idTipoDocumento` 3 (CERTIDÃO), descrição `tipos` 134 ("Atestado de permanência e conduta carcerária"); atestado de pena em 13251 (ATESTADO DE PENA), descrição 140. Desmarcar `ckbsGerarPendenciaAnlaiseJuntada`; `movimentarButton`; assinar em `celularButton` por clique real.
+- **Canaimé** (sessão aberta pelo usuário): busca direta `/sgp2rr/areas/unidades/pesquisa_resultadoVULGO.php?busca1=cpf&busca2=<cpf>&busca3=&Submit2=Pesquisar` (`busca1` também aceita nome ou mae); certidão em `/sgp2rr/areas/impressoes/UND_CertidaoCarceraria.php?id_cad_preso=<id>`. Com a ponte do computador, PDF pelo método da `vep-lapso-vencido-concluso`, item 4. **Sem a ponte** (11/11/2026, 1000416-75.2018): na aba do SEEU, ouvir `drop` em todos os frames e guardar os arquivos em `window.top.__imgs`; na aba da certidão, para cada parada de rolagem (topos das linhas `tr`, passo menor que `innerHeight`), tirar o mouse de cima, screenshot e `upload_image` para a aba do SEEU na coordenada [683,300] com nome pNN.jpg; montar em JS um PDF 1.4 (duas telas por página A4, JPEG em DCTDecode, recorte na largura 716), conferir as páginas e anexar por `DataTransfer`.
