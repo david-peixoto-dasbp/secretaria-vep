@@ -35,7 +35,7 @@ Versão 2.5 (30/10/2026). Nome de exibição: retorno de conclusão. Construída
 - **Frações**: pela data do fato de cada crime (anterior a 23/01/2020: 1/6 comum; Pacote Anticrime: 16 a 70%; hediondo com reincidência genérica: 40%).
 - **Conduta**: falta grave reabilita 1 ano depois do fato; a data-base deve ser posterior. Exemplo de divergência: data-base fixada antes da reclassificação da conduta para BOA.
 - **Lapso**: desconfiar de data-base em período em que o apenado estava solto ou com o processo arquivado aguardando captura.
-- **Remições já cadastradas** com referência posterior à nova data-base: incluir no plano a alteração da Data Final (Fase 4, item A2).
+- **Remições já cadastradas** com referência posterior à nova data-base: não mexer; apontar no plano (Fase 4, item A2).
 - **Lapso com período em liberdade**: se o processo esteve arquivado aguardando captura, ou houve não apresentação e mandado de prisão, conferir se os Eventos refletem isso antes de aceitar a data da calculadora.
 - **Data-base x conduta**: a data-base fixada não pode cair em período de conduta MÁ; conferir na certidão a data da reclassificação para BOA. Se a própria decisão diz que a data-base é a data em que os dois requisitos foram reunidos, a reclassificação pesa.
 - Divergência: o processo fica fora da leva e segue o item **H** (certidão e devolução ao magistrado), quando o usuário mandar.
@@ -47,7 +47,7 @@ Listar os atos com todos os valores, na ordem da Fase 4. Padrões já aprovados:
 
 | Item | Valor padrão |
 |---|---|
-| Data de referência da remição | véspera da data-base da progressão (Data Final + "Data de Fim" como referência) |
+| Data de referência da remição | a data final do período remido (último dia de trabalho, estudo ou leitura comprovado no atestado) ou, na remição por prova (ENEM, ENCCEJA), a data da prova; não usar mais a véspera da data-base (padrão do usuário desde 12/11/2026) |
 | Data Início da progressão | data-base fixada na decisão |
 | Alteração de Data-Base "Fixo" | mudar para "Dinâmico" |
 | Saída temporária deferida | não cadastrar incidente; a ciência à unidade basta |
@@ -72,9 +72,9 @@ Listar os atos com todos os valores, na ordem da Fase 4. Padrões já aprovados:
 
 **R. Retificação de condenação.** Capa, aba Processos Criminais, [Abrir Tudo]. Abrir o desmembramento da pena marcada **ATIVA** (se houver Apelação Criminal ativa, é ela, não a originária), Alterar. Marcar as circunstâncias da decisão (violência ou grave ameaça, reincidente comum, reincidente específico) e clicar **Sugerir** (sem Sugerir o SEEU calcula como primário). Conferir as frações sugeridas com a decisão antes de Salvar. Mapa do SEEU, pós-Pacote: sem VGA e reincidente comum = 20% (art. 112, II); com VGA e reincidente comum = 25% (III); **com VGA e "Reincidente Específico" = 30% (IV)**; livramento do reincidente = 1/2 "Comum Reincidente". Condenações por fatos anteriores a 23/01/2020 ficam em 1/6, salvo ordem diversa. Prova: reabrir cada desmembramento e ler os campos salvos.
 
-**A. Remição.** Incidentes Concedidos, Adicionar, filtrar "REMI", escolher **REMIÇÃO** pelo texto exato (não DIAS PERDIDOS NA REMIÇÃO), Novo Incidente, Maximizar. Concedido Juiz = Sim; Data de Decisão; Juiz; Dias Remidos; Data de Final = véspera da data-base; referência = **Data de Fim**; Observação com modalidades e obras (controle de bis in idem). A lupa de Petição só lista petições: deixar em branco. Salvar. Prova: "Incidente N - REMIÇÃO cadastrado".
+**A. Remição.** Incidentes Concedidos, Adicionar, filtrar "REMI", escolher **REMIÇÃO** pelo texto exato (não DIAS PERDIDOS NA REMIÇÃO), Novo Incidente, Maximizar. Concedido Juiz = Sim; Data de Decisão; Juiz; Dias Remidos; Data de Final = último dia do período remido (ou data da prova, na remição por ENEM ou ENCCEJA); referência = **Data de Fim** (a data final) ou a data da prova; Observação com modalidades e obras (controle de bis in idem). A lupa de Petição só lista petições: deixar em branco. Salvar. Prova: "Incidente N - REMIÇÃO cadastrado".
 
-**A2. Remições antigas.** Remição com referência posterior à nova data-base: Alterar, Data Final = véspera da data-base, referência = Data de Fim, Salvar.
+**A2. Remições antigas.** Remição já cadastrada com referência posterior à nova data-base: não alterar a Data Final (o ajuste para a véspera da data-base foi abandonado em 12/11/2026); apontar ao usuário no plano.
 
 **B. Data-base.** Incidente "ALTERAÇÃO DE DATA-BASE DE PROGRESSÃO DE REGIME/LIVRAMENTO CONDICIONAL" com **Fixo** trava a data-base e o SEEU ignora a nova progressão: Alterar para **Dinâmico**, Salvar. Prova: "Incidente N ... alterado".
 
