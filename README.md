@@ -17,6 +17,7 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 | `skills/vep-certidao-alvara-bnmp` | Dá baixa em alvarás pendentes no BNMP, emitindo a certidão de cumprimento após comprovar a saída no Canaimé. |
 | `skills/vep-grupos-digito` | Separa processos pelo 7º algarismo entre Roni (1 e 2), Diego (3 e 4), Silvio (0 e 5), Riba (6 e 8) e Andreia (7 e 9). |
 | `skills/vep-produtividade-gabinete` | Levanta no SEEU a produtividade do gabinete (minutas por assessor, mês, área e tipo) e entrega planilha .xlsx com conferência de totais e gráficos. |
+| `skills/vep-acordao` | Cadastra no SEEU o acórdão juntado que altere a pena (nova pena de Apelação Criminal, desmembramento e frações), confere o cálculo, certifica, junta o atestado de pena e dá ciência às partes (Portaria, arts. 30 e 31). Versão 0.4 (12/11/2026). |
 
 ## Como usar
 
