@@ -18,6 +18,9 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 | `skills/vep-grupos-digito` | Separa processos pelo 7º algarismo entre Roni (1 e 2), Diego (3 e 4), Silvio (0 e 5), Riba (6 e 8) e Andreia (7 e 9). |
 | `skills/vep-produtividade-gabinete` | Levanta no SEEU a produtividade do gabinete (minutas por assessor, mês, área e tipo) e entrega planilha .xlsx com conferência de totais e gráficos. |
 | `skills/vep-acordao` | Cadastra no SEEU o acórdão juntado que altere a pena (nova pena de Apelação Criminal, desmembramento e frações), confere o cálculo, certifica, junta o atestado de pena e dá ciência às partes (Portaria, arts. 30 e 31). Versão 0.4 (12/11/2026). |
+| `skills/vep-analise-juntadas` | Orquestrador: lê as juntadas pendentes, classifica pelo ato que cada uma exige (Portaria vigente), entrega tabelas e planilha, leva o plano e chama a skill de cada ato. Versão 0.1 (16/11/2026). |
+| `skills/vep-atos-ordinatorios` | Atos de tramitação: remição (art. 38), agravo (art. 35), vista de pedidos (art. 4º e 19), conclusão ordinária e saneamento (DJ, arquivamento, redistribuição, lembretes). Versão 0.1 (16/11/2026). |
+| `skills/vep-guia-nova` | Conferência de guia nova ou definitiva (art. 21, 22 e 30), certidão e encaminhamento (art. 24, 27 e 28). Versão 0.1 (16/11/2026). |
 
 ## Como usar
 
