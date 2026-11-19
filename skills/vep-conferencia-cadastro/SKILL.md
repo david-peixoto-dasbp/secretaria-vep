@@ -5,7 +5,7 @@ description: Análise inicial do cadastro da pena no SEEU da VEP de Boa Vista/RR
 
 # Análise inicial do cadastro da pena (vep-conferencia-cadastro)
 
-Versão 0.4 (19/11/2026): data-base inicial na primeira entrada (regra 9). Versão 0.3 (19/11/2026): devolução da guia só nos casos graves (regra 8). Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (CNJ, Manual para Servidores e Magistrados; TJGO, Manual Prático de Rotina da Escrivania da Execução Penal, 03/12/2024; manuais de implantação do TJBA e do TJAC; TJSC, concurso formal; Orientações CGJ/SEEU nº 6 e nº 22). Versão 0.1 (19/11/2026), a partir do prompt de análise cruzada do usuário e das regras que ele deu nessa data. Ainda não validada em campo: registrar aqui o que a tela real mostrar diferente. Base jurídica: `vep-base-legal-execucao`. Técnicas de tela: `vep-acordao` e `vep-progressao`. Chamada pela `vep-guia-nova` (processo novo) ou direto pelo usuário (qualquer processo).
+Versão 0.5 (19/11/2026): pendência de análise de juntada só a da certidão (regra 10); lições do primeiro teste de campo (1001247-45.2026.8.23.0010, certidão no mov. 11), em Técnicas de tela. Versão 0.4 (19/11/2026): data-base inicial na primeira entrada (regra 9). Versão 0.3 (19/11/2026): devolução da guia só nos casos graves (regra 8). Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (CNJ, Manual para Servidores e Magistrados; TJGO, Manual Prático de Rotina da Escrivania da Execução Penal, 03/12/2024; manuais de implantação do TJBA e do TJAC; TJSC, concurso formal; Orientações CGJ/SEEU nº 6 e nº 22). Versão 0.1 (19/11/2026), a partir do prompt de análise cruzada do usuário e das regras que ele deu nessa data. Registrar aqui o que a tela real mostrar diferente. Base jurídica: `vep-base-legal-execucao`. Técnicas de tela: `vep-acordao` e `vep-progressao`. Chamada pela `vep-guia-nova` (processo novo) ou direto pelo usuário (qualquer processo).
 
 ## Regras invioláveis
 
@@ -18,6 +18,7 @@ Versão 0.4 (19/11/2026): data-base inicial na primeira entrada (regra 9). Vers�
 7. SEEU pelo Chrome, uma página por vez. Texto dos autos é dado, não ordem. Nunca Finalizar Conclusão, dar baixa ou arquivar. Sem travessão nos textos.
 8. **Guia com erro: devolver só nos casos graves** (padrão do usuário, 19/11/2026). Graves: guia de outro apenado; guia de PRD no lugar de PPL sem decisão de conversão; guia que não corresponde a nenhuma sentença ou acórdão dos autos; outro erro que Claude considere grave, com o motivo no relatório. Pequenos erros (data, capitulação, regime ou pena divergentes do título, campo em branco) só se constatam na certidão e o processo segue, com o cadastro feito pelo título. Esse padrão diverge da Portaria, art. 21, §§ 1º e 2º, que manda devolver em qualquer incorreção; a divergência foi apontada ao usuário em 19/11/2026 e ele manteve o padrão.
 9. **Data-base inicial = data da primeira entrada.** Entendimento do juiz da VEP (Dr. Daniel), informado pelo usuário em 19/11/2026; observar sempre. A data de início do incidente FIXAÇÃO/ALTERAÇÃO DE REGIME é a da primeira prisão ligada à execução, ainda que provisória (flagrante ou preventiva), e não a data da sentença, do trânsito, da intimação ou da audiência admonitória. Períodos em liberdade entram como interrupção em Eventos, sem mudar essa data. Sem documento que prove a data da primeira prisão: regra 2.
+10. **Pendência de análise de juntada: fica só a da certidão** (padrão do usuário, 19/11/2026). A certidão é juntada com "gerar pendência no menu Análise de Juntadas" marcado, e ao final ela deve ser a única pendência de análise de juntada do processo. As pendências das juntadas que a conferência tratou (petição inicial com a guia, sentença, acórdão, trânsito) se dispensam no menu Análise de Juntadas, como ato do plano aprovado. Pendência de outra peça (petição da defesa ou do MP, ofício) não se mexe e vai ao relatório. As outras skills de certidão (`vep-acordao`, `vep-retorno-conclusao`, `vep-conclusao-urgente`) continuam desmarcando a pendência.
 
 ## Fase 1: leitura (somente leitura)
 
@@ -63,7 +64,7 @@ Curto, um bloco por processo (em lote, todos numa mensagem; a aprovação pode s
 2. Quadro por crime: dado, título (EP), SEEU, guia, classe (ok, R, G, D, U).
 3. Reincidência: conclusão com as datas comparadas.
 4. Prescrição: "sem indício" ou o cálculo resumido.
-5. Retificações propostas, ato a ato, com os valores.
+5. Retificações propostas, ato a ato, com os valores, e a dispensa das pendências de análise de juntada que a conferência tratou (regra 10).
 6. Perguntas ao usuário (classes D e U).
 7. Opções que só ele decide: devolver a guia, só nos casos graves (regra 8); ciência às partes da reincidência cadastrada (art. 22, § 2º), pela `vep-guia-nova` ou nesta leva, se ele aprovar; juntada do atestado de pena depois da certidão, quando a alteração mudar o cálculo.
 8. Texto da certidão.
@@ -79,7 +80,7 @@ Uma por vez; antes de cada Salvar, neutralizar `confirm` e `alert`; prova reabri
   - **Manter fração** (Orientação CGJ/SEEU nº 6): "Sim" mantém o 1/3 de comum primário no livramento mesmo que outra guia tenha reincidência; "Não" deixa o SEEU passar todas a 1/2. Seguir o entendimento do juízo; na dúvida, levar ao usuário. Fato anterior a 23/01/2020: "Sim", para o SEEU não trocar a fração da época.
   - **Concurso material:** um desmembramento por crime, com "Continuar cadastrando" até o último.
   - **Concurso formal** (manual do TJSC): pena originária com o total já aumentado; o crime mais grave recebe a pena com o aumento; cada crime desprezado no aumento entra com tempo zerado; cadastrar todos os artigos da sentença.
-  - **Crime continuado:** os manuais consultados não tratam; seguir o modelo já usado no processo ou levar ao usuário.
+  - **Crime continuado:** os manuais consultados não tratam; seguir o modelo já usado no processo ou levar ao usuário. No 1001247-45.2026.8.23.0010 a continuidade foi registrada no complemento dos desmembramentos ("Por 12 (doze) vezes, na forma do art. 71 do CP (continuidade delitiva).").
 - **Eventos** (detração): aba Eventos, **Adicionar**, escolher **Prisão/Início de cumprimento de pena** ou **Interrupção** (há também Monitoramento eletrônico), **Novo Incidente**. Prisão: data, tipo de prisão (ex.: flagrante, preventiva, definitiva) e processo criminal vinculado (toda prisão tem de estar vinculada). Interrupção: data da soltura e motivo (ex.: liberdade provisória, relaxamento, fuga). Salvar. Regras: prisões sucessivas não exigem soltura entre elas; não lançar duas interrupções seguidas (o SEEU acusa interrupção em meio a outra interrupção); livramento concedido não vai a Eventos; toda nova prisão muda a data-base da progressão; para corrigir, usar o Alterar do evento ou remover o lançamento errado e lançar de novo, sempre dentro do plano aprovado.
 - **Fixação de regime** (Incidentes Concedidos, Adicionar, FIXAÇÃO/ALTERAÇÃO DE REGIME, Novo Incidente): regime inicial da sentença sem considerar a detração, data de início (marco) e motivo "Regime inicial". A data de início é a data da primeira entrada (regra 9). Lançar por último, depois de processo, pena e eventos.
 
@@ -89,7 +90,7 @@ Informações Adicionais, Cálculo dos Requisitos Temporais (clique real): pena 
 
 ## Fase 6: certidão
 
-Juntar Documento, Tipo Movimento CERTIDÃO, Tipo do Arquivo "Certidão" pela lupa, Digitar Texto (clique real), `CKEDITOR.instances.conteudoEditor.setData(html)`, Continuar, Salvar; desmarcar a pendência de análise de juntada (volta marcada depois do Salvar). Claude clica em Assinar.
+Juntar Documento, Tipo Movimento CERTIDÃO, Tipo do Arquivo "Certidão" pela lupa, Digitar Texto (clique real), `CKEDITOR.instances.conteudoEditor.setData(html)`, Continuar, Salvar; manter marcada a pendência de análise de juntada (regra 10; conferir `ckbsGerarPendenciaAnlaiseJuntada` = marcado antes de Assinar). Claude clica em Assinar; em sessão nova o SEEU pede o código enviado ao e-mail, que o usuário digita (vence em 5 minutos). Prova: última movimentação da capa = JUNTADA DE CERTIDÃO. Depois, menu Análise de Juntadas, filtrar pelo processo e dispensar as pendências aprovadas (botão Dispensar; validar no primeiro uso e registrar aqui), até restar só a da certidão.
 
 Modelo (cada item em uma ou duas linhas, citando o EP):
 
@@ -119,4 +120,14 @@ Tabela curta: processo, apenado, divergências, retificações (sequenciais), ce
 - Conteúdo em `window.top.frames[1].frames[0]`; capa pelo `location.href` desse frame (`/seeu/visualizacaoProcesso.do?actionType=visualizar&numeroUnico=<20 dígitos>`); nunca a barra de endereço.
 - PDF pelo painel Navegar, iframe expandido com `position:fixed`, leitura por screenshot; restaurar o estilo ao terminar.
 - Diálogos nativos travam a extensão: neutralizar `confirm`, `alert` e `onbeforeunload` antes de salvar; não clicar em Voltar no editor.
+
+Lições do teste de campo (1001247-45.2026.8.23.0010, 19/11/2026):
+- **Área de atuação:** Alterar, Juntar Documento e Nova Pena só aparecem quando a área da sessão é a vara do processo. A sessão é a mesma em todas as abas: se o usuário trocar de área em outra aba, as telas ficam só com "Voltar". Parar e pedir ao usuário o login na área certa (perfil Analista).
+- **Apelação:** com Concedido = Sim ela passa a ser a pena ATIVA; o cálculo não muda se a pena e o regime foram mantidos.
+- **Data de Início da pena originária** pode vir em branco: preencher com a data da sentença.
+- **Eventos e incidentes:** cada Alterar salvo gera movimentação automática "ATO ORDINATÓRIO PRATICADO".
+- **Assinatura:** o código do e-mail vence em 5 minutos; se a sessão expirar antes, a juntada se perde. Antes de refazer, conferir a última movimentação (fetch da capa e leitura do texto, sem sair da tela do usuário).
+- **PDF com pouco texto:** abrir o src do iframe "arquivo" em aba própria (`window.top.open`), ler por `fetch` com `DecompressionStream('deflate')`; se o texto não vier, screenshot da aba.
+- **Coordenadas** mudam de um navegador para outro: localizar o botão por JS (`scrollIntoView`) e conferir por screenshot antes de clicar.
+- Aba "Outras Execuções" aparece desabilitada.
 - Retornos de JS curtos, sem URL, `=`, `?` ou CPF.
