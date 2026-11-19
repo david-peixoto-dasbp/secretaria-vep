@@ -18,6 +18,9 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 | `skills/vep-grupos-digito` | Separa processos pelo 7º algarismo entre Roni (1 e 2), Diego (3 e 4), Silvio (0 e 5), Riba (6 e 8) e Andreia (7 e 9). |
 | `skills/vep-produtividade-gabinete` | Levanta no SEEU a produtividade do gabinete (minutas por assessor, mês, área e tipo) e entrega planilha .xlsx com conferência de totais e gráficos. |
 | `skills/vep-acordao` | Cadastra no SEEU o acórdão juntado que altere a pena (nova pena de Apelação Criminal, desmembramento e frações), confere o cálculo, certifica, junta o atestado de pena e dá ciência às partes (Portaria, arts. 30 e 31). Versão 0.4 (12/11/2026). |
+| `skills/vep-guia-nova` | Confere guia de execução nova ou definitiva e dá o encaminhamento da Portaria (arts. 21, 22, 24, 27, 28 e 30); a conferência dos dados da pena vai para a vep-conferencia-cadastro. Versão 0.2 (19/11/2026). |
+| `skills/vep-conferencia-cadastro` | Análise inicial do cadastro da pena (tempo, regime, capitulação, características, frações, detração) contra sentença, acórdão e guia: relatório para aprovação, retificação e certidão de saneamento. Versão 0.2 (19/11/2026), ainda não validada em campo. |
+| `skills/vep-base-legal-execucao` | Consulta por data do fato: frações do art. 112 da LEP e do art. 83 do CP, hediondez, reincidência, detração e prescrição; usada pelas skills que conferem ou cadastram frações. Versão 0.1 (19/11/2026). |
 
 ## Como usar
 
