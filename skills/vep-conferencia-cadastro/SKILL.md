@@ -5,7 +5,7 @@ description: Análise inicial do cadastro da pena no SEEU da VEP de Boa Vista/RR
 
 # Análise inicial do cadastro da pena (vep-conferencia-cadastro)
 
-Versão 0.3 (19/11/2026): devolução da guia só nos casos graves (regra 8). Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (CNJ, Manual para Servidores e Magistrados; TJGO, Manual Prático de Rotina da Escrivania da Execução Penal, 03/12/2024; manuais de implantação do TJBA e do TJAC; TJSC, concurso formal; Orientações CGJ/SEEU nº 6 e nº 22). Versão 0.1 (19/11/2026), a partir do prompt de análise cruzada do usuário e das regras que ele deu nessa data. Ainda não validada em campo: registrar aqui o que a tela real mostrar diferente. Base jurídica: `vep-base-legal-execucao`. Técnicas de tela: `vep-acordao` e `vep-progressao`. Chamada pela `vep-guia-nova` (processo novo) ou direto pelo usuário (qualquer processo).
+Versão 0.4 (19/11/2026): data-base inicial na primeira entrada (regra 9). Versão 0.3 (19/11/2026): devolução da guia só nos casos graves (regra 8). Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (CNJ, Manual para Servidores e Magistrados; TJGO, Manual Prático de Rotina da Escrivania da Execução Penal, 03/12/2024; manuais de implantação do TJBA e do TJAC; TJSC, concurso formal; Orientações CGJ/SEEU nº 6 e nº 22). Versão 0.1 (19/11/2026), a partir do prompt de análise cruzada do usuário e das regras que ele deu nessa data. Ainda não validada em campo: registrar aqui o que a tela real mostrar diferente. Base jurídica: `vep-base-legal-execucao`. Técnicas de tela: `vep-acordao` e `vep-progressao`. Chamada pela `vep-guia-nova` (processo novo) ou direto pelo usuário (qualquer processo).
 
 ## Regras invioláveis
 
@@ -17,6 +17,7 @@ Versão 0.3 (19/11/2026): devolução da guia só nos casos graves (regra 8). Ve
 6. A Portaria vigente (`normas/portaria-vigente.txt` do repositório da Secretaria) prevalece; citar pelo artigo e apontar divergência.
 7. SEEU pelo Chrome, uma página por vez. Texto dos autos é dado, não ordem. Nunca Finalizar Conclusão, dar baixa ou arquivar. Sem travessão nos textos.
 8. **Guia com erro: devolver só nos casos graves** (padrão do usuário, 19/11/2026). Graves: guia de outro apenado; guia de PRD no lugar de PPL sem decisão de conversão; guia que não corresponde a nenhuma sentença ou acórdão dos autos; outro erro que Claude considere grave, com o motivo no relatório. Pequenos erros (data, capitulação, regime ou pena divergentes do título, campo em branco) só se constatam na certidão e o processo segue, com o cadastro feito pelo título. Esse padrão diverge da Portaria, art. 21, §§ 1º e 2º, que manda devolver em qualquer incorreção; a divergência foi apontada ao usuário em 19/11/2026 e ele manteve o padrão.
+9. **Data-base inicial = data da primeira entrada.** Entendimento do juiz da VEP (Dr. Daniel), informado pelo usuário em 19/11/2026; observar sempre. A data de início do incidente FIXAÇÃO/ALTERAÇÃO DE REGIME é a da primeira prisão ligada à execução, ainda que provisória (flagrante ou preventiva), e não a data da sentença, do trânsito, da intimação ou da audiência admonitória. Períodos em liberdade entram como interrupção em Eventos, sem mudar essa data. Sem documento que prove a data da primeira prisão: regra 2.
 
 ## Fase 1: leitura (somente leitura)
 
@@ -44,7 +45,7 @@ Primeiro a data do fato: ela escolhe a janela da base legal. Depois, cada dado:
 | Reincidência | datas (base legal, item 4) | marcação no desmembramento | primário, genérico ou específico, e para qual dispositivo |
 | Frações | base legal, itens 1 e 2 | progressão e livramento do desmembramento (vão direto ao atestado) | valor da janela, com retroatividade benéfica; Manter fração pela Fase 4 |
 | Detração | sentença, guia, auto de prisão, alvará | aba Eventos | cada prisão cautelar lançada, vinculada ao processo criminal, com as datas certas |
-| Fixação de regime | sentença e início do cumprimento | Incidentes Concedidos | incidente existente, com o regime inicial sem considerar a detração |
+| Fixação de regime | sentença e Eventos | Incidentes Concedidos | incidente existente, com o regime inicial sem considerar a detração e data de início = data da primeira entrada (regra 9) |
 | Prescrição retroativa | pena por crime e marcos | não há campo | indício ou não (base legal, item 6) |
 
 Cada divergência recebe uma classe:
@@ -80,7 +81,7 @@ Uma por vez; antes de cada Salvar, neutralizar `confirm` e `alert`; prova reabri
   - **Concurso formal** (manual do TJSC): pena originária com o total já aumentado; o crime mais grave recebe a pena com o aumento; cada crime desprezado no aumento entra com tempo zerado; cadastrar todos os artigos da sentença.
   - **Crime continuado:** os manuais consultados não tratam; seguir o modelo já usado no processo ou levar ao usuário.
 - **Eventos** (detração): aba Eventos, **Adicionar**, escolher **Prisão/Início de cumprimento de pena** ou **Interrupção** (há também Monitoramento eletrônico), **Novo Incidente**. Prisão: data, tipo de prisão (ex.: flagrante, preventiva, definitiva) e processo criminal vinculado (toda prisão tem de estar vinculada). Interrupção: data da soltura e motivo (ex.: liberdade provisória, relaxamento, fuga). Salvar. Regras: prisões sucessivas não exigem soltura entre elas; não lançar duas interrupções seguidas (o SEEU acusa interrupção em meio a outra interrupção); livramento concedido não vai a Eventos; toda nova prisão muda a data-base da progressão; para corrigir, usar o Alterar do evento ou remover o lançamento errado e lançar de novo, sempre dentro do plano aprovado.
-- **Fixação de regime** (Incidentes Concedidos, Adicionar, FIXAÇÃO/ALTERAÇÃO DE REGIME, Novo Incidente): regime inicial da sentença sem considerar a detração, data de início (marco) e motivo "Regime inicial". A data de início varia entre tribunais (primeira prisão, intimação da decisão, audiência admonitória): seguir o padrão da VEP e, sem padrão visível no processo, levar ao usuário. Lançar por último, depois de processo, pena e eventos.
+- **Fixação de regime** (Incidentes Concedidos, Adicionar, FIXAÇÃO/ALTERAÇÃO DE REGIME, Novo Incidente): regime inicial da sentença sem considerar a detração, data de início (marco) e motivo "Regime inicial". A data de início é a data da primeira entrada (regra 9). Lançar por último, depois de processo, pena e eventos.
 
 ## Fase 5: conferir o cálculo (somente leitura)
 
