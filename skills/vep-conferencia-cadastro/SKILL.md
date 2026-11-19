@@ -139,3 +139,4 @@ Lições do teste de campo (1001247-45.2026.8.23.0010, 19/11/2026):
 - **PDF com pouco texto:** abrir o src do iframe "arquivo" em aba própria (`window.top.open`), ler por `fetch` com `DecompressionStream('deflate')`; se o texto não vier, screenshot da aba.
 - **Coordenadas** mudam de um navegador para outro: localizar o botão por JS (`scrollIntoView`) e conferir por screenshot antes de clicar.
 - Aba "Outras Execuções" aparece desabilitada.
+- **Pena interrompida (apenado solto):** o Cálculo dos Requisitos Temporais não projeta livramento nem término, e no aberto a progressão mostra "Em regime aberto deferido em <data da decisão>". Conferir pena, cumprida, restante, início do cumprimento e total de interrupção; as datas aparecem quando o cumprimento for retomado.
