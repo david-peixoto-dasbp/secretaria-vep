@@ -120,6 +120,7 @@ Tabela curta: processo, apenado, divergências, retificações (sequenciais), ce
 - Conteúdo em `window.top.frames[1].frames[0]`; capa pelo `location.href` desse frame (`/seeu/visualizacaoProcesso.do?actionType=visualizar&numeroUnico=<20 dígitos>`); nunca a barra de endereço.
 - PDF pelo painel Navegar, iframe expandido com `position:fixed`, leitura por screenshot; restaurar o estilo ao terminar.
 - Diálogos nativos travam a extensão: neutralizar `confirm`, `alert` e `onbeforeunload` antes de salvar; não clicar em Voltar no editor.
+- Retornos de JS curtos, sem URL, `=`, `?` ou CPF.
 
 Lições do teste de campo (1001247-45.2026.8.23.0010, 19/11/2026):
 - **Área de atuação:** Alterar, Juntar Documento e Nova Pena só aparecem quando a área da sessão é a vara do processo. A sessão é a mesma em todas as abas: se o usuário trocar de área em outra aba, as telas ficam só com "Voltar". Parar e pedir ao usuário o login na área certa (perfil Analista).
@@ -130,4 +131,3 @@ Lições do teste de campo (1001247-45.2026.8.23.0010, 19/11/2026):
 - **PDF com pouco texto:** abrir o src do iframe "arquivo" em aba própria (`window.top.open`), ler por `fetch` com `DecompressionStream('deflate')`; se o texto não vier, screenshot da aba.
 - **Coordenadas** mudam de um navegador para outro: localizar o botão por JS (`scrollIntoView`) e conferir por screenshot antes de clicar.
 - Aba "Outras Execuções" aparece desabilitada.
-- Retornos de JS curtos, sem URL, `=`, `?` ou CPF.
