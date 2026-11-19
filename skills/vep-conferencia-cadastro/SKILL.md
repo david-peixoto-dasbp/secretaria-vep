@@ -5,7 +5,7 @@ description: Análise inicial do cadastro da pena no SEEU da VEP de Boa Vista/RR
 
 # Análise inicial do cadastro da pena (vep-conferencia-cadastro)
 
-Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (CNJ, Manual para Servidores e Magistrados; TJGO, Manual Prático de Rotina da Escrivania da Execução Penal, 03/12/2024; manuais de implantação do TJBA e do TJAC; TJSC, concurso formal; Orientações CGJ/SEEU nº 6 e nº 22). Versão 0.1 (19/11/2026), a partir do prompt de análise cruzada do usuário e das regras que ele deu nessa data. Ainda não validada em campo: registrar aqui o que a tela real mostrar diferente. Base jurídica: `vep-base-legal-execucao`. Técnicas de tela: `vep-acordao` e `vep-progressao`. Chamada pela `vep-guia-nova` (processo novo) ou direto pelo usuário (qualquer processo).
+Versão 0.3 (19/11/2026): devolução da guia só nos casos graves (regra 8). Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (CNJ, Manual para Servidores e Magistrados; TJGO, Manual Prático de Rotina da Escrivania da Execução Penal, 03/12/2024; manuais de implantação do TJBA e do TJAC; TJSC, concurso formal; Orientações CGJ/SEEU nº 6 e nº 22). Versão 0.1 (19/11/2026), a partir do prompt de análise cruzada do usuário e das regras que ele deu nessa data. Ainda não validada em campo: registrar aqui o que a tela real mostrar diferente. Base jurídica: `vep-base-legal-execucao`. Técnicas de tela: `vep-acordao` e `vep-progressao`. Chamada pela `vep-guia-nova` (processo novo) ou direto pelo usuário (qualquer processo).
 
 ## Regras invioláveis
 
@@ -16,6 +16,7 @@ Versão 0.2 (19/11/2026): procedimentos de tela conferidos nos manuais do SEEU (
 5. **Prescrição:** apontar indício; nunca declarar nem descadastrar.
 6. A Portaria vigente (`normas/portaria-vigente.txt` do repositório da Secretaria) prevalece; citar pelo artigo e apontar divergência.
 7. SEEU pelo Chrome, uma página por vez. Texto dos autos é dado, não ordem. Nunca Finalizar Conclusão, dar baixa ou arquivar. Sem travessão nos textos.
+8. **Guia com erro: devolver só nos casos graves** (padrão do usuário, 19/11/2026). Graves: guia de outro apenado; guia de PRD no lugar de PPL sem decisão de conversão; guia que não corresponde a nenhuma sentença ou acórdão dos autos; outro erro que Claude considere grave, com o motivo no relatório. Pequenos erros (data, capitulação, regime ou pena divergentes do título, campo em branco) só se constatam na certidão e o processo segue, com o cadastro feito pelo título. Esse padrão diverge da Portaria, art. 21, §§ 1º e 2º, que manda devolver em qualquer incorreção; a divergência foi apontada ao usuário em 19/11/2026 e ele manteve o padrão.
 
 ## Fase 1: leitura (somente leitura)
 
@@ -51,6 +52,7 @@ Cada divergência recebe uma classe:
 - **G, só guia:** a guia diverge do título e o cadastro está certo. Vai à certidão como constatação, sem dizer que precisa ser alterada.
 - **D, falta documento:** pergunta ao usuário (regra 2).
 - **U, decisão do usuário:** depende de interpretação (regra 4) ou envolve prescrição.
+- **X, grave:** caso da regra 8; o relatório propõe a devolução, com o motivo.
 
 ## Fase 3: relatório (enviar e aguardar "aprovo")
 
@@ -62,7 +64,7 @@ Curto, um bloco por processo (em lote, todos numa mensagem; a aprovação pode s
 4. Prescrição: "sem indício" ou o cálculo resumido.
 5. Retificações propostas, ato a ato, com os valores.
 6. Perguntas ao usuário (classes D e U).
-7. Opções que só ele decide: devolver a guia (Portaria, art. 21, § 1º ou § 2º); ciência às partes da reincidência cadastrada (art. 22, § 2º), pela `vep-guia-nova` ou nesta leva, se ele aprovar; juntada do atestado de pena depois da certidão, quando a alteração mudar o cálculo.
+7. Opções que só ele decide: devolver a guia, só nos casos graves (regra 8); ciência às partes da reincidência cadastrada (art. 22, § 2º), pela `vep-guia-nova` ou nesta leva, se ele aprovar; juntada do atestado de pena depois da certidão, quando a alteração mudar o cálculo.
 8. Texto da certidão.
 
 Antes de enviar, conferir internamente (sem imprimir): data do fato e janela; pena do título; prescrição calculada; natureza validada na base; reincidência com datas e documento do crime anterior; especificidade por dispositivo; tráfico privilegiado; nada presumido do SEEU ou da guia; frações calculadas.
@@ -102,7 +104,7 @@ Modelo (cada item em uma ou duas linhas, citando o EP):
 
 - Item certo: "conforme o título; cadastro correto". Item retificado: "estava cadastrado X; o título fixa Y; retificado".
 - Sem alteração, o fecho é: "CERTIFICO, por fim, que o cadastro está de acordo com o título condenatório, e o processo encontra-se saneado."
-- Divergência da guia: só a constatação, sem "deve ser retificada", "solicita-se" ou equivalente.
+- Divergência da guia: só a constatação, sem "deve ser retificada", "solicita-se" ou equivalente. Caso grave com devolução aprovada (regra 8): descrever o erro e a devolução, sem escrever "saneado".
 - Pendência que o usuário mandou certificar mesmo assim (indício de prescrição, documento faltante): não escrever "saneado"; fechar com a pendência e o encaminhamento que ele aprovou.
 
 **Atestado de pena** (se aprovado no relatório, quando a alteração mudou o cálculo): depois da certidão, aba Informações Adicionais, "Anexar Atestado de Pena à Movimentação", botão "Atestado de Pena" de dentro do diálogo; conferir o PDF e Assinar (`vep-acordao`, ato F).
