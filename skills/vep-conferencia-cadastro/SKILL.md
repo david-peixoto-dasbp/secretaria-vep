@@ -98,7 +98,7 @@ Anotar antes e depois. Divergência: achar a causa no cadastro, levar ao usuári
 
 ## Fase 6: certidão
 
-Só depois da Fase 5 sem divergência. Juntar Documento, Tipo Movimento CERTIDÃO, Tipo do Arquivo "Certidão" pela lupa, Digitar Texto (clique real), `CKEDITOR.instances.conteudoEditor.setData(html)`, Continuar, Salvar; manter marcada a pendência de análise de juntada (regra 10; conferir `ckbsGerarPendenciaAnlaiseJuntada` = marcado antes de Assinar). Claude clica em Assinar; em sessão nova o SEEU pede o código enviado ao e-mail, que o usuário digita (vence em 5 minutos). Prova: última movimentação da capa = JUNTADA DE CERTIDÃO. Depois, menu Análise de Juntadas, filtrar pelo processo e dispensar as pendências aprovadas (botão Dispensar; validar no primeiro uso e registrar aqui), até restar só a da certidão.
+Só depois da Fase 5 sem divergência. Juntar Documento, Tipo Movimento CERTIDÃO, Tipo do Arquivo "Certidão" pela lupa, Digitar Texto (clique real), `CKEDITOR.instances.conteudoEditor.setData(html)`, Continuar, Salvar; manter marcada a pendência de análise de juntada (regra 10; conferir `ckbsGerarPendenciaAnlaiseJuntada` = marcado antes de Assinar). Claude clica em Assinar; em sessão nova o SEEU pede o código enviado ao e-mail, que o usuário digita (vence em 5 minutos). Prova: última movimentação da capa = JUNTADA DE CERTIDÃO. Depois, menu Análise de Juntadas, filtrar pelo processo e dispensar as pendências aprovadas (botão Dispensar; validar no primeiro uso e registrar aqui), até restar só a da certidão. Validado no 1001387-79.2026.8.23.0010: o link "Há N pendências de análise de juntada" da capa abre a lista filtrada pelo processo; marcar a linha (clique real na caixa), Dispensar, mensagem "Dispensa de análise efetuada com sucesso".
 
 Modelo (cada item em uma ou duas linhas, citando o EP):
 
@@ -137,6 +137,10 @@ Lições do teste de campo (1001247-45.2026.8.23.0010, 19/11/2026):
 - **Eventos e incidentes:** cada Alterar salvo gera movimentação automática "ATO ORDINATÓRIO PRATICADO".
 - **Assinatura:** o código do e-mail vence em 5 minutos; se a sessão expirar antes, a juntada se perde. Antes de refazer, conferir a última movimentação (fetch da capa e leitura do texto, sem sair da tela do usuário).
 - **PDF com pouco texto:** abrir o src do iframe "arquivo" em aba própria (`window.top.open`), ler por `fetch` com `DecompressionStream('deflate')`; se o texto não vier, screenshot da aba.
+- **PDF no Chrome de casa:** a aba própria do PDF não aceita JS nem screenshot (visualizador é extensão). Ler dentro do SEEU: painel Navegar, clicar no documento, pôr em `position:fixed` os iframes da cadeia (o de `frames[1].frames[0]` no frame 1, o de `frames[2]` no frame 1.0 e o iframe "arquivo"), ir à página pelo campo de página do visualizador e ler por screenshot com rolagem; restaurar os estilos depois. Na sentença, ir direto à dosimetria do réu e ao dispositivo.
+- **Data do fato e da primeira prisão:** a sentença costuma não trazer; a denúncia traz o fato e o flagrante, e a guia traz a data e o motivo da prisão (pode ser a da conversão em preventiva, não a do flagrante).
+- **Término no cálculo:** o SEEU soma a pena restante à data de hoje; pode dar 1 dia a menos que a contagem corrida a partir da data-base. É convenção do sistema, não erro de cadastro. Progressão e livramento batem com a soma dos lapsos à data-base.
+- **Assinatura:** nem toda sessão pede o código do e-mail.
 - **Coordenadas** mudam de um navegador para outro: localizar o botão por JS (`scrollIntoView`) e conferir por screenshot antes de clicar.
 - Aba "Outras Execuções" aparece desabilitada.
 - **Pena interrompida (apenado solto):** o Cálculo dos Requisitos Temporais não projeta livramento nem término, e no aberto a progressão mostra "Em regime aberto deferido em <data da decisão>". Conferir pena, cumprida, restante, início do cumprimento e total de interrupção; as datas aparecem quando o cumprimento for retomado.
