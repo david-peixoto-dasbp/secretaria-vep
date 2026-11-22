@@ -16,11 +16,12 @@ Recebe uma lista de processos, lê cada um a partir da última decisão e devolv
 
 ## O que ler em cada processo
 
-1. **Capa:** sentenciado, defesa, datas de benefícios e alertas: Instaurar Incidente de Ofício, Retorno de Conclusão, Pré-Analisar Conclusão, vistas abertas, intimações, Cumprimentos para Expedir, lembretes ativos e erro de publicação no DJ.
+1. **Capa:** sentenciado, defesa, datas de benefícios e alertas: Instaurar Incidente de Ofício, Retorno de Conclusão, Pré-Analisar Conclusão, vistas abertas, intimações, Cumprimentos para Expedir, lembretes ativos e erro de publicação no DJ. Ler os pares `td.label`/`td.labelRadio` com a célula vizinha. O campo **Conclusão** mostra a conclusão em aberto ("Conclusão de DECISÃO/SENTENÇA" ou "Pré-Analisar Conclusão", com URGENTE): é ele que diz se está concluso, porque remessa ao MP depois de um concluso não encerra a conclusão. "Vista ao Ministério Público (Não-Bloqueante)" indica vista aberta.
 2. **Movimentações** desde a última decisão, ignorando confirmações, decursos e recebimentos automáticos.
 3. **Teor das peças:** a última juntada; a petição ou certidão a que ela responde; e o **dispositivo** da última decisão (última página). Se isso não bastar, ler a penúltima decisão e os documentos anteriores. Pareceres longos: primeira e última página.
 4. **Conferir o cumprimento da última decisão:** comparar o dispositivo com o que foi lançado depois (incidente, atestado, remessa à unidade, ciência às partes, retificação). O que faltar é tarefa. Exemplos reais: remessa à unidade não feita; retificação de fração não lançada.
 5. **"Ciente" do MP não encerra o processo:** ver se há outro pedido sem decisão, agravo parado ou prazo decorrido.
+6. **Incidentes de término (extinção):** o alerta "Instaurar Incidente de Ofício" continua na capa até a decisão, então conferir as abas Pendentes e Não-Concedidos. Achados de 22/11/2026: certidão de lapso remetida ao MP sem cadastrar o incidente; "juntada de incidente" sem incidente em nenhuma aba; incidente lançado como Não Concedido sem decisão; término em cálculo **MANUAL** com data absurda (07/05/1956, no 1000137-21.2020). Data estranha: ver em Informações Adicionais, Cálculo dos Requisitos Temporais, se aparece "(MANUAL)" e comparar com a Linha do Tempo Detalhada, que mostra o resultado do motor de cálculo. A correção (Cálculo Manual/Automático, Cálculo Automático) altera o cálculo: só com autorização expressa do usuário. A capa atualiza em instantes.
 
 ## Grupos
 
@@ -49,6 +50,8 @@ Resposta sucinta, sem travessão, em tabelas por grupo: número completo, apenad
 - **Movimentações:** `tr[id^="mov"]`. Colunas: 2 sequência, 3 data, 4 texto, última responsável. Limpar `div[id^="idMenuBtn"]` e `table.contextMenu`. `SEMARQUIVO` no id indica movimento sem arquivo. Decisão: responsável magistrado com arquivo.
 - **Arquivos do movimento:** no HTML da linha, `HtmlContent("<url>"`. Fazer POST com corpo `tipoLayout=1` e pegar `a[href*="arquivo.do"]` em `table.form tr`.
 - **Ler PDF:** `arquivo.do` redireciona para outro host, então `fetch` falha. Criar no documento de `w` um iframe `position:fixed; top:0; left:0; width:100%; height:100%; z-index:99999` com `src = href + '#page=N'`, recriando-o a cada documento, esperar 4 a 6 segundos e tirar screenshot com scale 0,7 a 0,75. Tela escura com barra de progresso: PDF ainda carregando, esperar mais. Número de página acima do total cai na última.
+- **Abas sem carregar a capa inteira:** `visualizacaoProcesso.do?actionType=visualizar&numeroUnico=<20 dígitos>&selectedIcon=<aba>` devolve cerca de 100 KB; ler o bloco `tabprefixN` (6 Eventos, 7 Incidentes Concedidos, 8 Não-Concedidos, 9 Pendentes). O link `openIncidente('N;tipo;')` de cada linha abre o incidente.
+- **PDF no iframe:** o parâmetro `#zoom` é ignorado. Logo depois de carregar, o primeiro scroll às vezes não pega: rolar de novo antes do screenshot.
 - **Não injetar biblioteca externa** (ex.: pdf.js) na página do SEEU: é bloqueado.
 - **Retornos do JS:** cada string é cortada perto de 1.000 caracteres; devolver array de strings curtas. Trocar `=` e `?` por `~` e não devolver URL, token ou CPF.
 - **browser_batch:** até 5 documentos por lote; lotes maiores ou esperas somadas perto de 2 minutos estouram o tempo.

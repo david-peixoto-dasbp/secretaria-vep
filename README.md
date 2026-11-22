@@ -11,7 +11,8 @@ A Portaria que orienta os procedimentos da Secretaria fica em `normas/portaria-v
 | Skill | Para que serve |
 |---|---|
 | `skills/vep-retorno-conclusao` | Cumpre no SEEU as decisões que voltam em Retorno de Conclusão: progressão, livramento (concedido ou indeferido), extinção, remição, retificação, OS 001/2026 e lembretes. Versão 2.5 (30/10/2026), nome interno vep-progressao. |
-| `skills/vep-triagem-expedientes` | Lê uma lista de processos no SEEU a partir da última decisão e agrupa por expediente a fazer, conforme a Portaria vigente, sem alterar nada. |
+| `skills/vep-triagem-expedientes` | Lê uma lista de processos no SEEU a partir da última decisão e agrupa por expediente a fazer, conforme a Portaria vigente, sem alterar nada. Atualizada em 22/11/2026: campo Conclusão da capa, conferência de incidentes de término (inclusive término em cálculo manual) e leitura das abas por `selectedIcon`. |
+| `skills/vep-instrucao-incidentes` | Instrui progressão, livramento ou extinção com lapso vencido e sem decisão: cadastra o incidente pendente e abre as vistas (progressão e extinção: só MP; livramento: defesa e depois MP), sob plano e aprovação. Atualizada em 22/11/2026: fluxo do término de pena, seletores por id da remessa, conferência da assinatura e ato H (incidente lançado como Não Concedido sem decisão). |
 | `skills/vep-conclusao-urgente` | Junta certidão do Canaimé e Relatório da Situação Processual Executória e envia concluso com urgência (Portaria, art. 14), sob plano, aprovação e prova. |
 | `skills/vep-conferir-alvara` | Confere em lote, sem alterar nada, se alvarás de soltura do SEEU foram cumpridos, cruzando cada processo com a certidão carcerária do Canaimé. |
 | `skills/vep-certidao-alvara-bnmp` | Dá baixa em alvarás pendentes no BNMP, emitindo a certidão de cumprimento após comprovar a saída no Canaimé. |
