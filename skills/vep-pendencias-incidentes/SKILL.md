@@ -41,7 +41,7 @@ Cada processo em um grupo só, o da providência mais urgente; as demais vão na
 |---|---|---|---|
 | 1. Instaurar e abrir vista | Lapso vencido sem incidente pendente | Incidente + vista (MP 5 dias; LC: DPE 10 dias ou advogado 5 dias) | vep-instrucao-incidentes A a D |
 | 2. Abrir vista | Incidente pendente sem vista | Remessa ou intimação | vep-instrucao-incidentes C e D |
-| 3. Concluso | Instruído: MP manifestou (progressão, extinção) ou defesa e MP (LC) | Enviar Concluso no agrupador da matéria | item "Conclusos" abaixo |
+| 3. Concluso | Instruído: MP manifestou (progressão, extinção) ou defesa e MP (LC) | Enviar Concluso no agrupador da matéria | item "Conclusos" abaixo; sem incidente instaurado: vep-instrucao-incidentes I |
 | 4. LC sem manifestação da defesa | Defesa teve vista, não falou do LC, MP já viu | Certidão + Canaimé + concluso | vep-instrucao-incidentes F |
 | 5. OS 001/2026 | Falta grave nos 12 meses | Certidão + OS, indeferimento de ofício, ciência | vep-instrucao-incidentes G; vep-progressao J |
 | 6. Retorno de conclusão | Decisão não cumprida | Plano próprio com valores | vep-progressao |
@@ -68,13 +68,13 @@ Cada processo em um grupo só, o da providência mais urgente; as demais vão na
 
 ### Conclusos
 
-"..." de uma movimentação, Enviar Concluso (`enviarConcluso.do`): `codTipoConclusao` 15 DECISÃO (16 DESPACHO, 14 SENTENÇA); `idLogonResponsavel` = DANIEL DAMASCENO AMORIM DOUGLAS (o padrão vem com outro magistrado); `flagUrgente` false; `idAgrupador`: 295315 PROGRESSÃO DE REGIME, 295313 LIVRAMENTO CONDICIONAL, 295311 EXTINÇÃO DE PENA, 295318 FALTA GRAVE E REGRESSÃO, 295316 REMIÇÃO, 295328 COMPETÊNCIA E TRANSFERÊNCIA, 295308 "0. INCIDENTE VENCIDO" (LC do grupo 4); sem assessor; Enviar imediatamente. Prova: "CONCLUSOS PARA DECISÃO". LC: juntar antes a certidão do Canaimé.
+"..." de uma movimentação, Enviar Concluso (`enviarConcluso.do`): `codTipoConclusao` 15 DECISÃO (16 DESPACHO, 14 SENTENÇA); `idLogonResponsavel` = DANIEL DAMASCENO AMORIM DOUGLAS (o padrão vem com outro magistrado); `flagUrgente` false; `idAgrupador`: 295315 PROGRESSÃO DE REGIME, 295313 LIVRAMENTO CONDICIONAL, 295311 EXTINÇÃO DE PENA, 295318 FALTA GRAVE E REGRESSÃO, 295316 REMIÇÃO, 295328 COMPETÊNCIA E TRANSFERÊNCIA, 295308 "0. INCIDENTE VENCIDO" (LC do grupo 4); sem assessor; Enviar imediatamente. Prova: "CONCLUSOS PARA DECISÃO". Todo concluso leva antes a certidão do Canaimé e o RSPE (ordem do usuário de 22/11/2026; nos incidentes com data vencida, também a Portaria, art. 14, V e parágrafo único).
 
 ### Saneamento
 
 - **Remover duplicado**: abrir o incidente (`openIncidente`), conferir número, "Pendente" e data, botão Remover (o `confirm` é do SEEU: responder sim). Prova: "Incidente N ... removido". Citar a remoção na certidão do próximo ato.
 - **Pendente já decidido**: Alterar com o resultado da decisão (Concedido Juiz, Data de Decisão, juiz, observação citando o mov.). Indulto não tem campo de motivo.
-- **Erro de publicação no DJ**: clicar Reenviar pelo caminho relativo (`/seeu/util/djen.do?...`); a tela não confirma: pedir ao usuário que confira no dia seguinte.
+- **Erro de publicação no DJ**: `fetch` do link Reenviar pelo caminho relativo (`/seeu/util/djen.do?...`). O SEEU cria na hora a movimentação "DISPONIBILIZADO NO DJ ELETRÔNICO", que é a prova (vep-instrucao-incidentes, ato J). Conferir todas as linhas de erro do processo, não só a mais recente.
 
 ### Incidente sem link na capa
 
