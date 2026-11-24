@@ -5,7 +5,7 @@ description: "Lê no SEEU uma lista de processos da VEP de Boa Vista/RR, a parti
 
 # Triagem de expedientes no SEEU
 
-Recebe uma lista de processos, lê cada um a partir da última decisão e devolve os processos agrupados por tarefa. **Somente leitura:** nenhuma movimentação no SEEU. Validada em 05/11/2026, com 57 processos.
+Recebe uma lista de processos, lê cada um a partir da última decisão e devolve os processos agrupados por tarefa. **Somente leitura:** nenhuma movimentação no SEEU. Validada em 05/11/2026, com 57 processos, e em 24/11/2026, com 162 processos da Multa Penal (texto integral das decisões em lote; ver a `vep-multa-retorno-conclusao` para os grupos e o cumprimento da Multa).
 
 ## Regras
 
@@ -47,9 +47,21 @@ Resposta sucinta, sem travessão, em tabelas por grupo: número completo, apenad
 
 - Conteúdo em `window.top.frames[1].frames[0]` (`w`). Guardar dados e funções em `window.top`.
 - **Capas em lote:** `w.fetch('/seeu/visualizacaoProcesso.do?actionType=visualizar&numeroUnico=<20 dígitos>')`, decodificar como `iso-8859-1` e usar `DOMParser`. Cada capa tem vários MB e leva até cerca de 35 segundos: rodar em promise de fundo, um processo por vez, com contador, e consultar depois. Ler antes de remover os `script`, porque o link dos arquivos está neles.
+- **Link dos arquivos na capa:** o script fica dentro da linha `tr[id^="mov"]` e tem espaço depois do parêntese: usar a regex `HtmlContent\(\s*"([^"]+)"`. Colunas da linha: `td[2]` sequência, `td[3]` data, `td[4]` evento, última célula responsável. Decisão = responsável magistrado, com arquivo, e evento que não comece por "EXPEDIÇÃO". Em 24/11/2026 cada capa levou de 1,5 a 6 s.
+- **Pendências pela capa baixada:** pares `td.label`/célula vizinha (chaves "Retorno de Conclusão", "Conclusão", "Vista ao Ministério Público (Não-Bloqueante)", "Cumprimentos para Expedir", "Análise de Juntadas"). Não procurar "Vista ao Ministério Público" no texto inteiro: as movimentações antigas repetem a expressão.
+- **Sessão expirada:** a capa baixada volta com cerca de 500 bytes e "A sessao expirou". Parar o laço nesse caso, guardar o que já foi lido em `sessionStorage` (sobrevive ao recarregamento da aba) e pedir ao usuário o código do PDPJ; depois escolher Analista e a área.
+- **Sessão compartilhada:** se o usuário trocar de área em outra aba, a capa baixada passa a mostrar outra "Atuação" e as pendências somem. Conferir "Atuação:" no texto da capa antes de concluir que não há pendência.
 - **Movimentações:** `tr[id^="mov"]`. Colunas: 2 sequência, 3 data, 4 texto, última responsável. Limpar `div[id^="idMenuBtn"]` e `table.contextMenu`. `SEMARQUIVO` no id indica movimento sem arquivo. Decisão: responsável magistrado com arquivo.
 - **Arquivos do movimento:** no HTML da linha, `HtmlContent("<url>"`. Fazer POST com corpo `tipoLayout=1` e pegar `a[href*="arquivo.do"]` em `table.form tr`.
 - **Ler PDF:** `arquivo.do` redireciona para outro host, então `fetch` falha. Criar no documento de `w` um iframe `position:fixed; top:0; left:0; width:100%; height:100%; z-index:99999` com `src = href + '#page=N'`, recriando-o a cada documento, esperar 4 a 6 segundos e tirar screenshot com scale 0,7 a 0,75. Tela escura com barra de progresso: PDF ainda carregando, esperar mais. Número de página acima do total cai na última.
+- **Ler o texto das decisões em lote, sem screenshot (validado em 24/11/2026, 178 documentos em cerca de 8 minutos):**
+  1. Abrir uma vez um documento numa aba própria com `window.top.open(href,'seeupdf')` a partir da aba do SEEU. A aba nova fica no host do S3 e `window.opener` aponta para o SEEU.
+  2. No SEEU, criar um iframe oculto no documento de `window.top` (`name='pdff'`) e um listener de `message` que, a cada pedido `{kind:'next'}` vindo do S3, põe no `src` do iframe o próximo `arquivo.do` e responde `{kind:'go', key, idx}` (idx = índice do iframe em `window.top.frames`).
+  3. Na aba do S3, um laço em segundo plano: pede o próximo, espera `window.opener.frames[idx].location.href` mudar para o host do S3 (mesma origem da aba, por isso legível), faz `fetch` dessa URL, descomprime cada `stream` com `DecompressionStream('deflate')` (gravar e fechar o writer ignorando o erro de lixo no fim e juntar os pedaços lidos), junta as strings dos operadores `Tj`/`TJ` e devolve o texto com `postMessage({kind:'tx', key, body})`. A aba do S3 não pode abrir pop-ups e um iframe próprio não recebe o cookie do SEEU: por isso o iframe fica no SEEU.
+  4. Limpar o texto: tirar o carimbo lateral ("Documento assinado digitalmente...") e o rodapé de endereço da vara, que se repete em cada página (`Av. CB PM ...@tjrr.jus.br`). O dispositivo fica a partir do último "Ante o exposto", "DISPOSITIVO" ou "Pelo exposto". Palavras em negrito saem fora de ordem ("a DECLARO extinta"): conferir na tela se o sentido mudar.
+  5. Documentos escaneados (ofícios do banco, atestados) saem com caracteres de controle: marcar "sem texto legível" e ler por screenshot.
+  6. Cuidado com listeners antigos: um listener que grava em chave fixa sobrescreve o texto de outro processo. Usar sempre a chave enviada na mensagem.
+- **Saída do JS:** cada string volta cortada perto de 1.000 caracteres e o filtro bloqueia trechos que pareçam cookie ou query (às vezes por causa de um `=` no texto). Devolver arrays de pedaços de até 850 caracteres e trocar `= ? & @` por `~`. Não devolver CPF.
 - **Abas sem carregar a capa inteira:** `visualizacaoProcesso.do?actionType=visualizar&numeroUnico=<20 dígitos>&selectedIcon=<aba>` devolve cerca de 100 KB; ler o bloco `tabprefixN` (6 Eventos, 7 Incidentes Concedidos, 8 Não-Concedidos, 9 Pendentes). O link `openIncidente('N;tipo;')` de cada linha abre o incidente.
 - **PDF no iframe:** o parâmetro `#zoom` é ignorado. Logo depois de carregar, o primeiro scroll às vezes não pega: rolar de novo antes do screenshot.
 - **Não injetar biblioteca externa** (ex.: pdf.js) na página do SEEU: é bloqueado.
