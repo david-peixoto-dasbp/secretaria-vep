@@ -25,30 +25,30 @@ A paralisação é legal quando o processo só espera o tempo de pena. O relató
 Seguir a `vep-triagem-expedientes` (capa, movimentações desde a última decisão, teor das peças) e acrescentar:
 
 1. **Datas da capa** (progressão, LC, término) e "Situação Atual". Para data-base, fração e regime atual, usar o texto do RSPE (técnica na `vep-instrucao-incidentes`, Leitura, item 3).
-2. **Abas de incidentes**: Pendentes (incidente sem decisão), Concedidos (HOMOLOGAÇÃO DE FALTA GRAVE com a data do fato; regressões; data-base alterada) e Não-Concedidos (LC ou progressão indeferidos e quando).
+2. **Abas de incidentes**: Pendentes (incidente sem decisão), Concedidos (HOMOLOGAÇÃO DE FALTA GRAVE com a data do fato; regressões; data-base alterada; LIVRAMENTO CONDICIONAL ativo) e Não-Concedidos (LC ou progressão indeferidos e quando).
 3. **Movimentações de suspensão**: "PROCESSO SUSPENSO Até ..." e "Suspensão interrompida".
 4. **Campos da capa**: Conclusão, vistas abertas, intimações não lidas (inclusive URGENTES), Cumprimentos Expedidos e Não Lidos, lembretes ativos, partes (Defensoria ou advogado).
 
 ## Peculiaridades a observar
 
-Achados reais de 24/11/2026, com a providência. Um processo pode ter vários; a nota registra todos e o grupo é o do mais urgente.
+Achados reais de 24 e 25/11/2026, com a providência. Um processo pode ter vários; a nota registra todos e o grupo é o do mais urgente.
 
 ### Lapsos e incidentes
 
 - **Lapso vencido sem incidente pendente** (LC ou progressão): instaurar (art. 16), depois de conferir a falta grave (abaixo). Acontece muito no regime aberto em prisão domiciliar (albergue domiciliar): o LC continua cabível.
 - **Lapso nos próximos 90 dias sem incidente**: instaurar (art. 16). Se o lapso estiver a mais de 90 dias, o processo é regular, mas anotar "instaurar a partir de dd/mm/aaaa" (lapso menos 90 dias).
+- **Pedido de remição pronto para conclusão**: antes de mandar concluso, somar os dias pedidos (o maior valor entre defesa e MP) e descontar do lapso mais próximo (progressão, LC ou término). Se a nova data cair dentro de 90 dias, tratar como remição com benefício (conclusão com o incidente junto); senão, conclusão ordinária de remição. Falta grave nos 12 meses segura o benefício mesmo com a remição. Ler o pedido para achar os dias; "reitera o pedido anterior" exige ler o pedido original. Validado em 25/11/2026 em 12 processos (ex.: 0000212-53.2015, 93 dias levariam a progressão a 23/12/2026, mas a falta de 03/05/2026 segura até 03/05/2027).
 - **Data da capa vencida depois de indeferimento** (LC ou progressão Não Concedido): não é pendência automática. Conferir a reanálise (art. 20): prazo do indeferimento, falta grave e se já cabe nova análise.
 - **Falta grave** (data do fato na aba Incidentes Concedidos, HOMOLOGAÇÃO DE FALTA GRAVE): na progressão, 12 meses anteriores (art. 16, § 1º, I); no **livramento, 60 meses** anteriores (art. 16, § 1º, II). Dentro do prazo, a Portaria manda cadastrar o incidente como não concedido, certificar e dar ciência às partes (art. 16, § 1º, III). Conferir também a OS 001/2026 (12 meses, incidentes já pendentes). Cuidado: o SEEU recalcula o LC para a data do fato + 12 meses, então a capa mostra LC "vencido" que a Portaria barra por 60 meses. **Ordem do usuário de 25/11/2026:** a Portaria ainda não foi publicada; até ele avisar que está valendo, considerar só os 12 meses também no LC (instruir normalmente se a falta tiver mais de 12 meses do fato).
-- **LC vedado** (ex.: hediondo com resultado morte, reincidente específico): a capa não mostra LC; não é pendência.
-- **Incidente pendente sem decisão** (indulto, LC, progressão): ver em que ponto parou a instrução. Defesa intimada com decurso e sem vista ao MP: vista ao MP. MP e defesa já ouvidos, ou defesa silente depois de despacho que mandou complementar (inclusive renúncia de prazo): concluso com certidão carcerária e RSPE.
-- **Incidente lançado com tipo ou situação errados** (ex.: EXTINÇÃO cadastrado no dia seguinte a um indeferimento de indulto; Não Concedido sem decisão): apontar.
-- **Cálculo com datas absurdas** (progressão ou LC depois do término, ano 2062 ou 2090): conferir cálculo MANUAL (ver `vep-triagem-expedientes`).
-- **Término da capa mudou sem decisão** (ex.: um dia a menos depois de pedido de detração): conferir se alguém retificou sem decisão.
-
 - **Apenado em livramento condicional**: antes de propor progressão, conferir na aba Incidentes Concedidos se há LIVRAMENTO CONDICIONAL ativo e no RSPE a nota "Em livramento condicional deferido em". Em LC não cabe progressão; preso de novo (Canaimé com processo novo) é caso de conclusão urgente (art. 14). Erro de 25/11/2026 no 0069022-39.2008.
 - **Óbito**: a extinção vai conclusa só com parecer do MP. Se o MP já teve vista sobre o óbito (inclusive por decurso), concluso; se não, vista ao MP antes (ordem do usuário de 25/11/2026).
 - **Progressão vencida no fim do mês**: faltando 6 dias ou menos para o fim do mês, cadastrar o incidente e mandar concluso direto, sem vista ao MP (meta do Prêmio CNJ de Qualidade; ordem do usuário de 25/11/2026), com a certidão: "Certifico que, em análise aos autos e ao Sistema Eletrônico de Execução Unificada (SEEU), consta pendência de apreciação referente a benefício executório (Progressão), cujo requisito temporal já se encontra implementado. Considerando as diretrizes do Prêmio CNJ de Qualidade, que estabelecem como meta a inexistência de pendências relativas a livramento condicional, progressão de regime e extinção da punibilidade, certifico, ainda, a necessidade de imediata regularização da referida pendência. Diante disso, faço os autos conclusos (CLS) para apreciação do benefício e saneamento da pendência processual."
 - **Pedido de saúde** (perícia, domiciliar) com MP já ouvido ou decorrido: concluso.
+- **LC vedado** (ex.: hediondo com resultado morte, reincidente específico): a capa não mostra LC; não é pendência.
+- **Incidente pendente sem decisão** (indulto, LC, progressão): ver em que ponto parou a instrução. Defesa intimada com decurso e sem vista ao MP: vista ao MP. MP e defesa já ouvidos, ou defesa silente depois de despacho que mandou complementar (inclusive renúncia de prazo): concluso com certidão carcerária e RSPE.
+- **Incidente lançado com tipo ou situação errados** (ex.: EXTINÇÃO cadastrado no dia seguinte a um indeferimento de indulto; Não Concedido sem decisão; indeferido mas ainda em Pendentes): apontar.
+- **Cálculo com datas absurdas** (progressão ou LC depois do término, ano 2062 ou 2090): conferir cálculo MANUAL (ver `vep-triagem-expedientes`).
+- **Término da capa mudou sem decisão** (ex.: um dia a menos depois de pedido de detração): conferir se alguém retificou sem decisão.
 
 ### Suspensão do processo
 
@@ -64,7 +64,7 @@ Achados reais de 24/11/2026, com a providência. Um processo pode ter vários; a
 - **Renúncia de mandato** sem providência (intimar o apenado ou remeter à Defensoria).
 - **Petição ou manifestação da defesa** com pedido (remição, detração, cumprimento) e MP já manifestado: concluso. Só ciência da defesa sobre atestado não substitui o pedido de remição.
 - **Termo de responsabilidade** da unidade em domiciliar ou harmonizado: só arquivar (art. 27, § 5º), regular.
-- **Ofício de outros órgãos** escaneado: ler antes de classificar.
+- **Ofício de outros órgãos** escaneado (ex.: comunicação de foragidos da saída temporária): ler antes de classificar.
 
 ### Decisão não cumprida ou diligência esquecida
 
@@ -94,10 +94,10 @@ Comparar o dispositivo da última decisão com o que veio depois:
 
 | Grupo | Exemplos |
 |---|---|
-| Prioritário (conclusão urgente, art. 14) | tornozeleira rompida, PAD com defesa já ouvida, suspensão vencida com ordem de concluso urgente, mandado de prisão cumprido sem cadastro |
-| Conclusão ordinária | incidente instruído sem decisão, pedido com MP manifestado, unidade prisional sem resposta (art. 6º, § 3º) |
+| Prioritário (conclusão urgente, art. 14) | tornozeleira rompida, fuga, PAD com defesa já ouvida, suspensão vencida com ordem de concluso urgente, mandado de prisão cumprido sem cadastro, LC com prisão por novo crime |
+| Conclusão ordinária | incidente instruído sem decisão, pedido com MP manifestado, unidade prisional sem resposta (art. 6º, § 3º), óbito com MP já ouvido |
 | Instaurar incidente (art. 16) | lapso vencido ou dentro de 90 dias |
-| Ato da Secretaria | atestado (art. 38), guia nova, renúncia de mandato, decisão não cumprida, cobrança de diligência |
+| Ato da Secretaria | atestado (art. 38), guia nova, renúncia de mandato, decisão não cumprida, cobrança de diligência, vista ao MP |
 | Aguardar | prazo correndo, precatória dentro do prazo |
 | Regular | só aguarda o tempo de pena |
 
@@ -112,7 +112,7 @@ Comparar o dispositivo da última decisão com o que veio depois:
 
 ## Depois da análise
 
-Plano por responsável em levas, cada uma só com o "faça" do usuário: leva 1 prioritários; leva 2 indultos e conclusões ordinárias; leva 3 instauração de incidentes; leva 4 atos da Secretaria. Antes de cada ato, reconferir o processo (pode ter andado depois da análise). Os atos seguem a `vep-conclusao-urgente`, a `vep-instrucao-incidentes` (atos B, K e L), a `vep-atos-ordinatorios` e a `vep-guia-nova`; as técnicas de tela estão na `vep-sei-seeu-canaime`.
+Plano por responsável em levas, cada uma só com o "faça" do usuário: leva 1 prioritários; leva 2 indultos e conclusões ordinárias; leva 3 instauração de incidentes; leva 4 atos da Secretaria. Antes de cada ato, reconferir o processo (pode ter andado depois da análise) e reler as peças posteriores à última decisão. Os atos seguem a `vep-conclusao-urgente`, a `vep-instrucao-incidentes` (atos B, K e L), a `vep-atos-ordinatorios` e a `vep-guia-nova`; as técnicas de tela estão na `vep-sei-seeu-canaime`.
 
 ## Técnicas de leitura
 
@@ -120,5 +120,5 @@ Plano por responsável em levas, cada uma só com o "faça" do usuário: leva 1 
 - Abas de incidentes sem baixar a capa inteira: `&selectedIcon=tabIncidentesPendentes`, `tabIncidentesConcedidos`, `tabIncidentesNaoConcedidos` (blocos `tabprefix9`, 7 e 8).
 - Data-base, fração e regime pelo texto do RSPE (cerca de 10 s por processo).
 - Documentos: link do movimento (`HtmlContent`), POST `tipoLayout=1`, `arquivo.do` em iframe de tela cheia e screenshot; última página para o dispositivo.
-- Texto em lote (validado em 25/11/2026, cerca de 190 documentos): aba do S3 aberta com `window.open` a partir do SEEU, iframe oculto no SEEU que recebe cada `arquivo.do` por `postMessage`, e na aba do S3 `fetch` do PDF com leitor próprio (objetos, ObjStm, ToUnicode, Form XObject). Fontes que separam letra por espaço: palavra real vem com 2 ou mais espaços. Listas e ofícios escaneados (ex.: comunicação de foragidos) só por screenshot. Não injetar biblioteca externa.
+- Texto em lote (validado em 25/11/2026, cerca de 190 documentos): aba do S3 aberta com `window.open` a partir do SEEU, iframe oculto no SEEU que recebe cada `arquivo.do` por `postMessage`, e na aba do S3 `fetch` do PDF com leitor próprio (objetos, ObjStm, ToUnicode, Form XObject). Fontes que separam letra por espaço: palavra real vem com 2 ou mais espaços. Listas e ofícios escaneados só por screenshot. Não injetar biblioteca externa.
 - Sessão expirada: parar, guardar o progresso em `notas.md` e pedir o login.
