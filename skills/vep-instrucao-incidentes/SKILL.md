@@ -12,6 +12,7 @@ Usar quando a triagem (vep-triagem-expedientes) apontar processo com lapso de pr
 1. Escrita só no perfil **Analista**, sob plano, aprovação expressa do usuário, execução ato a ato e prova (Res. CNJ 615/2025). Conferir o perfil antes de cada ato: menus Intimações, Decurso de Prazo e Cadastro, sem Assinaturas.
 2. Fluxo de vistas (ordem do usuário):
    - **Progressão e extinção**: só MP, MANIFESTAÇÃO, 5 dias.
+   - **Progressão no fim do mês** (ordem do usuário de 25/11/2026): faltando 6 dias ou menos para o fim do mês, sem vista ao MP; cadastrar o incidente e mandar concluso direto, com a certidão do Prêmio CNJ de Qualidade (texto na `vep-analise-paralisados`, Peculiaridades), certidão carcerária e RSPE.
    - Esse fluxo é ordem do usuário e diverge da Portaria, art. 16, § 1º, IV (vista sucessiva à defesa e ao MP em todos os incidentes, depois conclusão com ou sem manifestação). Divergência apontada em 22/11/2026; ordem mantida.
    - **Livramento**: primeiro a defesa (Defensoria: Realizar Remessa, MANIFESTAÇÃO, 10 dias; advogado: Intimar Partes, caixa Advogado, 5 dias); depois do retorno da defesa, MP MANIFESTAÇÃO 5 dias. Se a defesa já pediu o LC nos autos, o pedido vale como manifestação: vai direto ao MP.
    - Todo processo que vai concluso leva antes a certidão carcerária do Canaimé e o RSPE (ordem do usuário de 22/11/2026: "os que forem concluso tem que juntar a CC"; nos incidentes com data vencida, também a Portaria, art. 14, V e parágrafo único). Ver ato F.
