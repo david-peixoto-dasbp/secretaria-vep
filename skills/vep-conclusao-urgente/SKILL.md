@@ -23,7 +23,7 @@ Cumpre em lote o grupo "Conclusão urgente" da `vep-triagem-expedientes`. Valida
 
 ## Fase 2: atos em cada processo
 
-1. **Identificar no Canaimé:** pesquisa em `pesquisa_resultadoVULGO.php` (nome sem acento). Conferir nome e mãe com a capa do SEEU. Dois cadastros parecidos: não presumir, comparar mãe, RG e CPF.
+1. **Identificar no Canaimé:** pesquisa em `pesquisa_resultadoVULGO.php` (nome sem acento). Conferir nome e mãe com a capa do SEEU. Dois cadastros parecidos: não presumir, comparar mãe, RG e CPF. Com dois IDs da mesma pessoa, usar o da unidade atual, não o marcado "SAÍDA". Pela aba logada do Canaimé, um `fetch` de `/sgp2rr/areas/unidades/pesquisa_resultadoVULGO.php?busca1=nome&busca2=<NOME>&busca3=&Submit2=Pesquisar` devolve as linhas com ID, mãe e unidade (24/11/2026). Antes de certificar, ler a conduta atual, a última anotação e qualquer registro de falta, repreensão ou "NÃO OBSERVADO" e citá-los.
 2. **Certidão:** `areas/impressoes/UND_CertidaoCarceraria.php?id_cad_preso=<id>`. Registrar todas as telas (ver Técnicas) e montar um PDF com as imagens.
 3. **Relatório:** gerar o Relatório da Situação Processual Executória pela URL do botão "Situação Carcerária" da capa.
 4. **Juntada:** Juntar Documento, Tipo Movimento **CERTIDÃO**. Arquivos nesta ordem, com Descrição "Atestado de permanência e conduta carcerária" e "Relatório da Situação Processual Executória". **Desmarcar** "gerar pendência no menu Análise de Juntadas" por último, porque volta marcado.
@@ -34,6 +34,8 @@ Cumpre em lote o grupo "Conclusão urgente" da `vep-triagem-expedientes`. Valida
 
 Agrupadores usados: FALTA GRAVE E REGRESSÃO (regressão cautelar, fuga); DOMICILIAR E MONITORAÇÃO (domiciliar, laudo); SAÚDE (cirurgia, tratamento); LIVRAMENTO CONDICIONAL (revogação).
 
+Valores do `select[name=idAgrupador]` (24/11/2026): 295318 FALTA GRAVE E REGRESSÃO; 295321 DOMICILIAR E MONITORAÇÃO; 295308 INCIDENTE VENCIDO; 295312 INDULTO E COMUTAÇÃO; 295313 LIVRAMENTO; 295315 PROGRESSÃO DE REGIME; 295324 CÁLCULO. O mesmo envio, com Urgente = Não, serve à conclusão ordinária (ex.: indulto instruído). Magistrado: em 24/11/2026 o diálogo veio com a Dra. Joana Sarmento num processo; trocar para o titular aprovado (aparece "Alterar Juiz Responsável": deixar o padrão) e só então enviar (botão Enviar Concluso em cerca de (708, 846) com janela 896x1369).
+
 ## Entrega
 
 Tabela curta com processo, apenado, situação, destinatário e agrupador. Dizer quem assinou e apontar qualquer divergência do plano de imediato. Avisar que a certidão vai como imagem, sem texto selecionável.
@@ -41,6 +43,31 @@ Tabela curta com processo, apenado, situação, destinatário e agrupador. Dizer
 ## Técnicas de tela
 
 - Sem o computador do usuário ligado à sessão, não há como baixar e reenviar arquivo. O caminho validado é por screenshots.
+- **Caminho mais curto (24/11/2026, 5 certidões):** na aba da certidão (janela 900x1375, zoom 100%), passar o mouse em (860, 700), `scrollTo` em 0, 1330, 2660... e por último no scroll máximo (`scrollHeight` menos `innerHeight`), screenshot com `save_to_disk` e **scale 1** em cada parada (scale menor grava em baixa resolução). Montar o PDF no workspace com o script abaixo, passando `scrollY:arquivo` de cada captura, e anexar por `file_upload` (limite 3,8 MB; 9 capturas deram 2,6 MB).
+
+```python
+import sys
+from PIL import Image
+import numpy as np
+out=sys.argv[1]; items=[(int(a.split(':',1)[0]),a.split(':',1)[1]) for a in sys.argv[2:]]
+W=716
+H=max(y for y,_ in items)+Image.open(items[-1][1]).size[1]
+canvas=Image.new('RGB',(W,H),'white')
+for y,f in items:
+    im=Image.open(f).convert('RGB'); canvas.paste(im.crop((0,0,W,im.size[1])),(0,y))
+arr=np.asarray(canvas.convert('L')); rows=np.where(arr.min(axis=1)<200)[0]; H=rows[-1]+20; canvas=canvas.crop((0,0,W,H)); arr=arr[:H]
+pageH=int(W*297/210)-40; pages=[]; top=0; white=(arr.min(axis=1)>235)
+while top<H:
+    end=min(top+pageH,H)
+    if end<H:
+        cand=[r for r in range(end,top+pageH//2,-1) if white[r]]
+        if cand: end=cand[0]
+    pages.append(canvas.crop((0,top,W,end))); top=end
+outp=[]
+for p in pages:
+    pg=Image.new('RGB',(W+40,int((W+40)*297/210)),'white'); pg.paste(p,(20,20)); outp.append(pg)
+outp[0].save(out,save_all=True,append_images=outp[1:],resolution=96,quality=88)
+```
 - **Abas:** SEEU (frames, `window.top.frames[1].frames[0]` = `w`) e uma aba para a certidão. Aba com `innerHeight` 0 trava screenshots: fechar e abrir outra. Sempre limitar laços, pois altura 0 gera laço infinito.
 - **Não abrir o Juntar Documento como página principal** nem buscar a capa de lá: a sessão apareceu como expirada. Ficar em `w`. Com isso, `find` e `read_page` não veem os campos, então usar JS.
 - **Paradas de rolagem na certidão:** usar o topo das `tr`, com passo menor que `innerHeight`, para não cortar linhas. Verificar `scrollHeight` e capturar até o rodapé "IMPRESSO POR". Sobreposição é aceitável; omissão não.

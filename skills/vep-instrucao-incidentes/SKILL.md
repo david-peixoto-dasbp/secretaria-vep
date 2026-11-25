@@ -5,7 +5,7 @@ description: "Instrui no SEEU da VEP de Boa Vista/RR progressão, livramento ou 
 
 # Instrução de incidentes vencidos no SEEU
 
-Usar quando a triagem (vep-triagem-expedientes) apontar processo com lapso de progressão, livramento condicional (LC) ou término vencido, sem incidente pendente ou sem vista. Não é cumprimento de decisão (isso é vep-progressao). Validada em 12/11/2026 com 7 processos (0213290-43.2009, 1000079-81.2021, 1001425-33.2022, 1000920-42.2022, 1001701-30.2023, 1000434-28.2020, 1000474-15.2017). Término de pena (extinção) validado em 22/11/2026 com 17 processos do Regime Aberto (ex.: 1001273-77.2025, movs. 39 e 40). Leva de 22/11/2026 com 61 processos do Fechado e Semiaberto: RSPE anexo ao incidente (ato A), progressão já instruída vai conclusa (ato I), certidão carcerária por capturas de tela (ato F) e reenvio do DJ (ato J).
+Usar quando a triagem (vep-triagem-expedientes) apontar processo com lapso de progressão, livramento condicional (LC) ou término vencido, sem incidente pendente ou sem vista. Não é cumprimento de decisão (isso é vep-progressao). Validada em 12/11/2026 com 7 processos (0213290-43.2009, 1000079-81.2021, 1001425-33.2022, 1000920-42.2022, 1001701-30.2023, 1000434-28.2020, 1000474-15.2017). Término de pena (extinção) validado em 22/11/2026 com 17 processos do Regime Aberto (ex.: 1001273-77.2025, movs. 39 e 40). Leva de 22/11/2026 com 61 processos do Fechado e Semiaberto: RSPE anexo ao incidente (ato A), progressão já instruída vai conclusa (ato I), certidão carcerária por capturas de tela (ato F) e reenvio do DJ (ato J). Leva de 24/11/2026 (processos paralisados, ver vep-paralisados): datas pelo texto do RSPE, ato B detalhado (LC e progressão sem link na capa), LC e progressão juntos (ato K) e indulto pendente (ato L).
 
 ## Regras
 
@@ -28,6 +28,8 @@ Usar quando a triagem (vep-triagem-expedientes) apontar processo com lapso de pr
 1. Capa: links "Instaurar Incidente de Ofício (...)" no quadro de pendências, vistas abertas, retorno de conclusão, localizadores (ex.: "Exame Criminológico").
 2. Aba **Partes**: Defensoria, advogado constituído ou "parte sem advogado" (vai à Defensoria). OAB com "D" é defensor público.
 3. Datas: aba Informações Adicionais, clicar em "Cálculo dos Requisitos Temporais" para expandir (é carregado só na tela, não vem no HTML do fetch). Anotar data-base, fração e "Data do Requisito Temporal" de progressão, LC e término. A nota "(Existe falta grave nos últimos 12 meses em DD/MM/AAAA)" explica LC sem alerta de ofício na capa.
+   - Sem abrir a tela, pelo texto do RSPE (validado em 24/11/2026 em 9 processos): baixar o PDF pela URL do `openWindow` da capa, descomprimir cada `stream` com `DecompressionStream('deflate')`, juntar as strings de `Tj`/`TJ`, tirar os escapes (`\(`, `\)`, `\f`, `\b`), descartar os bytes 0 e somar 29 ao código de cada caractere. Saem "Data-base adotada no cálculo para progressão", a fração (ex.: "Hediondo primário (40%)"), "Data prevista para progressão", os mesmos campos do LC, "Regime Atual" e "Data prevista para o Término". Leva cerca de 10 s por processo: rodar em segundo plano.
+   - Falta grave: na aba Incidentes Concedidos, a linha HOMOLOGAÇÃO DE FALTA GRAVE traz a data do fato. Portaria, art. 16, § 1º: progressão, 12 meses anteriores; **livramento, 60 meses**; dentro do prazo, incidente não concedido com certidão e ciência (inciso III). O SEEU recalcula o LC para fato + 12 meses, então a capa mostra LC "vencido" que a Portaria barra. **Ordem do usuário de 25/11/2026:** a Portaria ainda não foi publicada; até ele avisar que está valendo, considerar só os 12 meses também no LC (instruir normalmente se a falta tiver mais de 12 meses do fato).
 4. Pedidos da defesa e pareceres já juntados: ler o teor.
 5. Plano por processo: incidente, texto da certidão, remessas com prazos. Levar ao usuário e esperar "aprovo".
 
@@ -46,13 +48,15 @@ Usar quando a triagem (vep-triagem-expedientes) apontar processo com lapso de pr
    - RSPE (Portaria, art. 16, caput): o endereço está no script da capa (`gerarResaQuadroAcoes`, chamada `openWindow` com `emitirRelatorioSituacaoProcessualExecutoria` e `idProcessoExecucaoPenal`). Baixar com `window.top.fetch` e guardar o ArrayBuffer em `window.top` (Blob buscado num frame que depois navega não resolve, e a chamada estoura). No frame da juntada, copiar para um `Uint8Array` do próprio frame, criar `File` ("Relatorio da Situacao Processual Executoria.pdf", application/pdf) e `DataTransfer`, pôr em `input[type=file][name=arquivosFile]` e disparar `change`. Tipo do anexo (`select[name=tipos]`): 139, Relatório da Situação Processual Executória. Certidão em primeiro; depois de assinar, a movimentação mostra N.1 certidão e N.2 relatório.
 8. Assinar: botão "Assinar" no rodapé (clique real, id `celularButton`). A altura da janela alterna entre sessões e até no meio da leva (551 ou 607 px): medir a posição do botão logo antes de cada clique e conferir pela movimentação; se não surgir a JUNTADA do dia, a assinatura não ocorreu e o clique deve ser refeito. Prova: "JUNTADA DE INCIDENTE DE EXECUÇÃO PENAL" e o incidente na aba Incidentes Pendentes. A data de referência do incidente fica a data da assinatura (a Data Início digitada antes se perde).
 
-### B. LC sem link de pendência
+### B. LC ou progressão sem link de pendência (validado em 24/11/2026 no 0002010-25.2010, 1000005-56.2023 e 1000430-54.2021)
 
-A juntada genérica de INCIDENTE DE EXECUÇÃO PENAL não oferece escolha de incidente. Cadastrar direto:
-1. Capa, aba Incidentes Pendentes, Adicionar; no select `codTipoIncidenteP` escolher LIVRAMENTO CONDICIONAL; Adicionar.
-2. Modal "Seleção de Tipo de Incidente": marcar o radio LIVRAMENTO CONDICIONAL e clicar **Novo Incidente**.
-3. Formulário (`incidente.do`): Concedido Juiz = Pendente; Data Início = data do requisito; Observação com o lapso, a data-base e o fluxo de vistas; marcar a pena ativa (`selection`); Cumprido = Não; Salvar.
-4. Prova: "ATO ORDINATÓRIO PRATICADO Incidente N - LIVRAMENTO CONDICIONAL cadastrado".
+A juntada genérica de INCIDENTE DE EXECUÇÃO PENAL não oferece escolha de incidente, e em 24/11/2026 nem a capa nem a Mesa do Analista trouxeram o link "Instaurar Incidente de Ofício". Cadastrar direto, com a capa como página principal (`navigate` para `visualizacaoProcesso.do?actionType=visualizar&numeroUnico=<20 dígitos>`):
+1. Aba Incidentes Pendentes (`#tabItemprefix9`). Clicar **Adicionar** abaixo da lista (com janela 896x1369: cerca de (802, 999) com a lista vazia e (802, 1012) com uma linha; conferir na screenshot).
+2. Modal "Seleção de Tipo de Incidente" (lista alfabética de radios): FIXAÇÃO/ALTERAÇÃO DE REGIME em cerca de (53, 469) e LIVRAMENTO CONDICIONAL em cerca de (53, 597); conferir com zoom e clicar **Novo Incidente** (723, 1117).
+3. O formulário abre num frame (`/seeu/processo/criminal/execucao/incidente.do`): achar o frame que tem `[name=dataInicio]` percorrendo `window.top.frames`. Campos: `concedidoJuiz` = P; `dataInicio` = data do requisito; `observacao` com o lapso, a data-base, a fração e o fluxo de vistas; no LC, marcar todas as penas ativas (`input[name=selection]`) e `cumprido` = false. Na progressão: `codTipoRegimeNovo` (1 Aberto, 2 Semiaberto, 3 Fechado) e `codMotivo` = 0 (Progressão de Regime); não há lista de penas.
+4. Progressão ainda não vencida mostra "Não atingiu o Requisito Objetivo para a Progressão de Regime": é normal (instauração 90 dias antes, art. 16).
+5. Salvar (no LC cerca de (747, 945); na progressão cerca de (747, 740)). A capa recarrega e a aba Pendentes mostra o número do incidente: anotar para a certidão.
+6. Prova: "ATO ORDINATÓRIO PRATICADO Incidente N - ... cadastrado". Depois, a juntada da certidão com RSPE (ato A, passos 2 a 8) e as vistas.
 
 ### C. Remessas (MP, Defensoria, unidade)
 
@@ -103,6 +107,18 @@ A defesa pediu a progressão, o MP teve vista e o prazo decorreu, mas o incident
 
 Na linha do movimento "Erro ao publicar intimação", o link Reenviar (`/seeu/util/djen.do`, ação de reenvio): `fetch` pelo caminho relativo. O SEEU cria na hora a movimentação "DISPONIBILIZADO NO DJ ELETRÔNICO", que é a prova. Conferir todas as linhas de erro do processo, não só a mais recente (no 1000491-46 havia outra, de 21/07/2026, mov. 299).
 
+### K. LC e progressão no mesmo processo (validado no 0002010-25.2010, movs. 580 a 583)
+
+1. Conferir a falta grave (Leitura, item 3): no LC, 60 meses (Portaria, art. 16, § 1º, II). Cadastrar os dois incidentes (ato B).
+2. Uma certidão para os dois: "CERTIFICO que, conforme o cálculo dos requisitos temporais do SEEU, o reeducando atingiu o lapso temporal para o livramento condicional em DD/MM/AAAA e atingirá o lapso para a progressão ao regime X em DD/MM/AAAA (data-base: ...), razão pela qual instaurei os incidentes de livramento condicional nº N e de progressão de regime nº M, pendentes de apreciação (Portaria, art. 16). [Se houver falta grave e o usuário tiver mandado instruir mesmo assim:] CERTIFICO, ainda, que a falta grave reconhecida nos autos (fato de ..., homologada em ...) tem mais de 12 (doze) meses da data do fato, e que junto o Relatório da Situação Processual Executória. Encaminho os autos à Defensoria Pública para manifestação sobre o livramento condicional; após, os autos seguirão ao Ministério Público para manifestação sobre os dois incidentes."
+3. Remessa à Defensoria (MANIFESTAÇÃO, 10 dias) ou intimação do advogado (5 dias), com orientação citando os dois incidentes. MP só no segundo momento.
+
+### L. Indulto pendente (validado em 24/11/2026: 1000660-67.2019 mov. 181; 1000530-48.2017 movs. 383 e 384; 1000570-30.2017 movs. 249 e 250)
+
+1. Incidente instaurado de ofício por certidão de lapso, defesa intimada e decurso, **sem vista ao MP**: só Realizar Remessa ao MP (MANIFESTAÇÃO, 5 dias) a partir do "..." da primeira movimentação, com orientação citando o incidente, a certidão e o decurso. Sem juntada.
+2. MP já ouvido e defesa silente depois de despacho ou decisão que mandou complementar ou se manifestar (inclusive renúncia de prazo): certidão carcerária do Canaimé (ato F, passo 2), certidão que relata os movimentos (instauração, pedido, parecer, despacho, decurso ou renúncia) e a conduta, anexos certidão carcerária (134) e RSPE (139); Enviar Concluso DECISÃO, não urgente, agrupador INDULTO E COMUTAÇÃO (295312).
+3. Apontar no encerramento, sem corrigir: atestados de trabalho sem tramitação e incidente cadastrado com tipo errado.
+
 ## Encerramento
 
 - Conferir em cada processo: incidente na aba Incidentes Pendentes, movimentos da juntada e das remessas, datas da capa (o incidente pendente não altera o cálculo).
@@ -116,3 +132,8 @@ Na linha do movimento "Erro ao publicar intimação", o link Reenviar (`/seeu/ut
 - Retornos de JS: sem URL, `=`, `?` ou CPF.
 - Operações longas: promise em `window.top` e consulta depois (chamadas acima de cerca de 40 s estouram). Se a sessão cair, `window.top` recarrega e os helpers somem: redefinir.
 - Uma juntada e uma assinatura por vez.
+- **Juntada como página principal** (24/11/2026, janela 896x1369): `navigate` para a capa, guardar em `sessionStorage` a URL do Juntar Documento (onclick do botão) e a do RSPE, e fazer `location.href` para a do Juntar Documento. Tipo Movimento 3; `codTipoArquivo` 37 e `descricaoTipoArquivo` "Certidão"; Digitar Texto visível (cerca de (193, 601)); `CKEDITOR.instances.conteudoEditor.setData(html)`; Continuar (773, 1295); prévia; Salvar (783, 1305). Assinar: x 798, y medido no `celularButton` (cerca de 759 com 2 arquivos e 801 com 3).
+- **`file_upload` recarrega a página:** variáveis guardadas na janela (ex.: o ArrayBuffer do RSPE) somem. Fazer primeiro o upload da certidão carcerária, depois buscar o RSPE e anexar por `DataTransfer`; só então os tipos (134 e 139) e, por último, desmarcar a pendência de análise.
+- **Assinatura:** o modal "Confirme seu código" pode aparecer por instantes e sumir sozinho; esperar e tirar outra screenshot antes de concluir que falhou. A prova é a tela "Movimentar Processo" com "Dados registrados com sucesso".
+- **Remessa logo após assinar:** na tela Movimentar Processo, link "Realizar Remessa" do painel Ações; o modal é um iframe (`remessaAutos.do`). Marcar o checkbox por clique real na coordenada do iframe somada à do elemento, depois de `scrollIntoView` e 1,2 s.
+- **Travamento:** chamadas de JS com `await` longo (laços de `fetch`) estouram em 45 s e podem deixar o renderer sem resposta; rodar em segundo plano e consultar. Em 24/11/2026 a aba travou ao abrir o Juntar Documento (screenshot sem resposta por mais de 30 s): parar, avisar o usuário pelo celular e pedir que feche o aviso ou entre de novo; não repetir o ato sem conferir.
