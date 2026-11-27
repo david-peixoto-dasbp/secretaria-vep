@@ -5,7 +5,7 @@ description: "Pratica no SEEU da VEP de Boa Vista/RR os atos ordinatórios da Po
 
 # Atos ordinatórios de tramitação no SEEU
 
-Recebe os grupos 2 a 5 da `vep-analise-juntadas` (ou da `vep-triagem-expedientes`) e pratica os atos que não são cumprimento de decisão. Versão 0.1 (16/11/2026), montada a partir da triagem de 103 processos; os atos de escrita ainda não foram validados em campo com esta skill (os mecanismos de remessa, intimação e concluso vêm da `vep-instrucao-incidentes` e da `vep-pendencias-incidentes`, validados em 12 e 13/11/2026). Cópia no repositório da Secretaria: `skills/vep-atos-ordinatorios`.
+Recebe os grupos 2 a 5 da `vep-analise-juntadas` (ou da `vep-triagem-expedientes`) e pratica os atos que não são cumprimento de decisão. Versão 0.2 (27/11/2026; a 0.1, de 16/11/2026, foi montada a partir da triagem de 103 processos; a 0.2 acrescenta o item K, pedidos que alteram o cálculo); os atos de escrita ainda não foram validados em campo com esta skill (os mecanismos de remessa, intimação e concluso vêm da `vep-instrucao-incidentes` e da `vep-pendencias-incidentes`, validados em 12 e 13/11/2026). Cópia no repositório da Secretaria: `skills/vep-atos-ordinatorios`.
 
 ## Regras
 
@@ -43,16 +43,30 @@ Conferir se a peça é mesmo agravo: pedido cadastrado como "Recurso de Agravo" 
 
 ## P. Pedidos diversos e vistas
 
-1. **Impulso (art. 4º):** pedido de domiciliar, transferência de unidade ou de comarca (art. 19), detração, retificação de cálculo, comutação, indulto, visita, saída, regime harmonizado: Realizar Remessa ao MP, MANIFESTAÇÃO, 5 dias, e agendar a conclusão pela ferramenta do SEEU.
+1. **Impulso (art. 4º):** pedido de domiciliar, transferência de unidade ou de comarca (art. 19), comutação, indulto, visita, saída, regime harmonizado (pedido que altera o cálculo segue o item K): Realizar Remessa ao MP, MANIFESTAÇÃO, 5 dias, e agendar a conclusão pela ferramenta do SEEU.
 2. **Resposta de diligência** que a decisão mandou submeter às partes (ex.: ofício de outro juízo, resposta da unidade sobre remição adiada): remessa ou intimação às partes conforme a decisão; depois, conclusão.
 3. **Parecer de outro processo:** certidão apontando o mov. e o número que consta no texto, e nova vista ao MP.
 4. **Petição de advogado sem procuração:** art. 8º.
 5. **Cópia de acórdão juntada pela parte:** ato ordinatório para a parte diligenciar a remessa pelo tribunal, certificando (art. 31, par. único).
 6. **Indulto:** certidão do lapso e vista às partes; com manifestação de ambas (ou só ciência), concluir.
 
+## K. Pedidos que alteram o cálculo
+
+Regra do usuário de 27/11/2026. Vale para todo pedido que altera o cálculo de pena: data da prisão ou da soltura, data do fato, fração, data-base, detração, regime, soma ou exclusão de pena. Remição segue o item R; indulto, comutação e benefícios (progressão, LC, término) seguem os seus itens. Exceção da Portaria: impugnação da reincidência cadastrada pela Secretaria (art. 22, § 3º) vai sempre à parte contrária e conclusa, mesmo sem divergência.
+
+| Situação | Ato |
+|---|---|
+| Pedido de uma parte e a outra ainda não foi ouvida | Intimar a parte contrária para manifestação, 5 dias (art. 6º): pedido da defesa, Realizar Remessa ao MP, MANIFESTAÇÃO; pedido do MP, vista à Defensoria ou Intimar Partes ao advogado. Orientação cita o mov. e a data do pedido |
+| Parte contrária pede diligência antes (ex.: certificar que o apenado ficou preso no período) | Cumprir a diligência (certidão com base no Canaimé e nos autos) e seguir as linhas abaixo conforme a manifestação |
+| Parte contrária concordou, só deu ciência ou o prazo decorreu sem manifestação | Analisar a procedência nos documentos dos autos (sentença, acórdão, guia, APF, certidão carcerária; frações pela `vep-base-legal-execucao`). Procedente: retificar o cadastro de ofício no SEEU, conferir o cálculo final e juntar certidão da retificação (pedido e mov., manifestação ou decurso, documento que comprova, o que mudou e as datas de benefício antes e depois), com ciência às partes. **Não concluir** |
+| Parte contrária se opôs, no todo ou em parte | Conclusão ordinária (item C), agrupador 295324 CÁLCULO, DETRAÇÃO E DATA-BASE |
+| Os autos não comprovam o pedido, ou ele exige interpretação do título (ex.: crime continuado sem data definida na sentença) | Certidão do ponto que impede a retificação e conclusão (item C), mesmo agrupador |
+
+Exemplos de 26/11/2026: data da prisão um dia depois do APF (1001595-05.2022 e 1001225-84.2026) e data do fato fora do período reconhecido na sentença (1000963-37.2026).
+
 ## C. Conclusão ordinária
 
-1. Só com pedido instruído: MP manifestado ou prazo decorrido, ou despacho que manda concluir.
+1. Só com pedido instruído: MP manifestado ou prazo decorrido, ou despacho que manda concluir. Pedido que altera o cálculo só vai concluso com divergência da parte contrária ou quando os autos não permitem retificar (item K).
 2. "..." de uma movimentação, Enviar Concluso: `codTipoConclusao` 15 DECISÃO (16 DESPACHO); responsável = DANIEL DAMASCENO AMORIM DOUGLAS (o padrão pode vir com outro magistrado: trocar); `flagUrgente` false; agrupador temático atual, nunca os iniciados por "z.": 295316 REMIÇÃO, 295315 PROGRESSÃO DE REGIME, 295313 LIVRAMENTO CONDICIONAL, 295311 EXTINÇÃO DE PENA, 295318 FALTA GRAVE E REGRESSÃO, 295328 COMPETÊNCIA E TRANSFERÊNCIA; para agravo e outros, ler a lista e escolher o da matéria; sem assessor; Enviar imediatamente.
 3. Erro "Há conclusões em aberto para o processo" significa que já está concluso: parar e relatar.
 4. Prova: "CONCLUSOS PARA DECISÃO" e "Pré-Analisar Conclusão" na capa.
@@ -66,7 +80,7 @@ Conferir se a peça é mesmo agravo: pedido cadastrado como "Recurso de Agravo" 
 | Progressão ao aberto cumprida | Depois do decurso de intimações e remessas (o SEEU impede antes), redistribuir ao Regime Aberto |
 | Lembrete obsoleto na capa (ex.: "Juntar mandado de prisão" de anos atrás) | Desativar, citando no relatório |
 | Mandado no BNMP com dado errado (número do processo) | Certidão do erro e retificação no BNMP (art. 29); se exigir assinatura do juiz, concluir |
-| Data de prisão cadastrada diferente do APF juntado | Conferir o documento e retificar o evento; com dúvida, vista ao MP |
+| Data de prisão cadastrada diferente do APF juntado | Com pedido de parte: item K. Erro constatado de ofício: conferir o documento, retificar o evento e certificar |
 | Renúncia do advogado | Intimar o apenado ou dar vista à Defensoria para assumir a defesa |
 | DP pede desabilitação por haver advogado constituído | Ajustar as partes e intimar o advogado |
 | Decisão que mandou retificar e não foi lançado | Não é saneamento: `vep-progressao` |
