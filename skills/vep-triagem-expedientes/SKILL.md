@@ -30,10 +30,10 @@ Usar estes grupos e criar outro quando o caso pedir. Cada processo fica em um s�
 | Grupo | Quando | Base |
 |---|---|---|
 | 1. Conclusão urgente | Regressão cautelar, prorrogação de domiciliar, falta grave ou fuga, saúde ou segurança, incidente vencido sem decisão, novo crime. Antes: certidão carcerária atualizada e Relatório de Situação Processual Executória | Art. 14 e 15 |
-| 2. Conclusão ordinária | Remição com MP manifestado (separar remição com progressão); transferência ou domiciliar após impulso; agravo com razões e contrarrazões ou decurso; despacho que manda concluir | Art. 38, § 1º; art. 19; art. 35, parágrafo único |
+| 2. Conclusão ordinária | Remição com MP manifestado (separar remição com progressão); transferência ou domiciliar após impulso; agravo com razões e contrarrazões ou decurso; despacho que manda concluir; pedido que altera o cálculo só com oposição da parte contrária ou sem prova nos autos | Art. 38, § 1º; art. 19; art. 35, parágrafo único; `vep-atos-ordinatorios` K |
 | 3. Agravo sem razões | Intimar o agravante para as razões | Art. 35, I |
 | 4. Agravo com razões | Intimar o agravado para contrarrazões | Art. 35, II |
-| 5. Ato da Secretaria | Cumprir decisão; mandado negativo e edital; mandado de prisão, ofício e arquivamento provisório; sem pedido de remição, certificar e manter; redistribuir; pendências da capa | Art. 24, 27, 38, § 2º |
+| 5. Ato da Secretaria | Cumprir decisão; mandado negativo e edital; mandado de prisão, ofício e arquivamento provisório; sem pedido de remição, certificar e manter; redistribuir; pendências da capa; pedido que altera o cálculo: intimar a parte contrária e, com concordância, ciência ou decurso, retificar de ofício e certificar | Art. 24, 27, 38, § 2º; `vep-atos-ordinatorios` K |
 | 6. Aguardar | Resposta de precatória; vista à Defensoria aberta; prazo de intimação correndo; só ciência com decisão cumprida | Dizer o que se aguarda |
 | 7. Já concluso | Conclusão em aberto na capa | Nada a fazer |
 

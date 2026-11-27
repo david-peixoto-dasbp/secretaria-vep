@@ -47,8 +47,9 @@ Cada processo vai para um grupo só, o da providência mais urgente; as demais f
 | Guia nova, guia definitiva, processo recém-distribuído | Conferência, reincidência, vista ou mandado (art. 21, 22, 24, 27, 28) | `vep-guia-nova` |
 | Declaração de remição, pedido de remição, defesa sem pedido, MP manifestado sobre remição | Art. 38 (caput, § 1º, § 2º) | `vep-atos-ordinatorios` R |
 | Agravo, razões, contrarrazões, "recebido o recurso" | Art. 35 | `vep-atos-ordinatorios` A |
-| Pedido diverso da defesa (transferência, domiciliar, detração, retificação de cálculo, comutação, indulto, visita, saída) sem MP | Impulso: vista ao MP (art. 4º e 19) | `vep-atos-ordinatorios` P |
-| MP ou defesa já se manifestaram e há pedido pendente, ou despacho manda concluir | Conclusão ordinária | `vep-atos-ordinatorios` C |
+| Pedido diverso da defesa (transferência, domiciliar, comutação, indulto, visita, saída) sem MP | Impulso: vista ao MP (art. 4º e 19) | `vep-atos-ordinatorios` P |
+| Pedido que altera o cálculo (data da prisão, data do fato, fração, data-base, detração, regime) | Parte contrária não ouvida: intimá-la. Concordou, só ciência ou decurso: analisar, retificar de ofício e certificar, sem conclusão. Oposição, ou autos que não permitem retificar: concluir | `vep-atos-ordinatorios` K |
+| MP ou defesa já se manifestaram e há pedido pendente, ou despacho manda concluir (pedido de cálculo: só com divergência, item K) | Conclusão ordinária | `vep-atos-ordinatorios` C |
 | Resposta a diligência que a decisão mandou submeter às partes | Vista às partes | `vep-atos-ordinatorios` P |
 | Alvará expedido sem certidão de cumprimento | Certidão no BNMP | `vep-certidao-alvara-bnmp` |
 | Erro de publicação no DJ, extinção cumprida, redistribuição ao Aberto, lembrete obsoleto, mandado com dado errado, renúncia de advogado | Saneamento | `vep-atos-ordinatorios` S |
